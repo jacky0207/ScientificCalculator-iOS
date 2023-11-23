@@ -1,0 +1,32 @@
+{
+  "configurations" : [
+    {
+      "id" : "220FD458-C6D8-4509-B574-D913D9B987AF",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "codeCoverage" : {
+      "targets" : [
+        {
+          "containerPath" : "container:",
+          "identifier" : "ScientificCalculator-iOS",
+          "name" : "ScientificCalculator-iOS"
+        }
+      ]
+    }
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "ScientificCalculator-iOSTests",
+        "name" : "ScientificCalculator-iOSTests"
+      }
+    }
+  ],
+  "version" : 1
+}
