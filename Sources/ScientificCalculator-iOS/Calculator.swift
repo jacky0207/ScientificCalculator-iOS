@@ -6,11 +6,16 @@
 //
 
 protocol Calculator {
+    var storage: CalculatorStorage { get }
+    var displayScreen: CalculatorDisplayScreen { get }
+    var controlPanel: CalculatorControlPanel { get }
+
     var text: String { get }
     var answer: Double { get }
-    var controlPanel: CalculatorControlPanel { get }
+    
     func appendKey(_ key: CalculatorKey)
     func delete()
     func clearAll()
     func calculate() throws
+    func calculate(to variable: CalculatorVariable) throws
 }

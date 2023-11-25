@@ -48,6 +48,8 @@ class CalculatorKeyTraveler {
                 }
             case .function:
                 break outer
+            case .variable:
+                break outer
             }
         }
         return head === node ? nil : head
@@ -75,6 +77,8 @@ class CalculatorKeyTraveler {
                     break outer
                 }
             case .function:
+                break outer
+            case .variable:
                 break outer
             }
         }

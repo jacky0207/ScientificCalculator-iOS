@@ -43,9 +43,10 @@ final class ScientificCalculatorControlPanelTests: XCTestCase {
 
     func testScientificCalculatorControlPanel_calculate() throws {
         controlPanel.appendKey(.number(.two), to: keys)
+        controlPanel.appendKey(.variable(.a), to: keys)  // x2
         controlPanel.appendKey(.function(.openBracket), to: keys)
         controlPanel.appendKey(.function(.openBracket), to: keys)
-        controlPanel.appendKey(.number(.one), to: keys)
+        controlPanel.appendKey(.variable(.b), to: keys)  // 1
         controlPanel.appendKey(.operator(.plus), to: keys)
         controlPanel.appendKey(.number(.two), to: keys)
         controlPanel.appendKey(.function(.closeBracket), to: keys)
@@ -54,7 +55,7 @@ final class ScientificCalculatorControlPanelTests: XCTestCase {
         controlPanel.appendKey(.function(.closeBracket), to: keys)
         controlPanel.appendKey(.function(.sin), to: keys)
         controlPanel.appendKey(.number(.three), to: keys)
-        controlPanel.appendKey(.number(.zero), to: keys)
-        XCTAssertEqual(try controlPanel.calculate(for: keys), 9)
+        controlPanel.appendKey(.variable(.c), to: keys)  // 10
+        XCTAssertEqual(try controlPanel.calculate(for: keys, with: [.a: 2, .b: 1, .c: 10]), 18)
     }
 }

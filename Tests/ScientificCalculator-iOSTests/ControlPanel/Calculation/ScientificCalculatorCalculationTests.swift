@@ -111,7 +111,7 @@ final class ScientificCalculatorCalculationTests: XCTestCase {
         nodes.append(.number(.one))
         nodes.append(.operator(.plus))
         nodes.append(.number(.two))
-        XCTAssertThrowsError(try calculation.simplifyBracket(for: nodes)) { error in
+        XCTAssertThrowsError(try calculation.simplifyBracket(for: nodes, with: [:])) { error in
             XCTAssertEqual(error as? CalculatorPairCommandError, .invalidOpen)
         }
     }
@@ -119,7 +119,7 @@ final class ScientificCalculatorCalculationTests: XCTestCase {
     func testScientificCalculatorCalculation_BracketNotOpenBeforeClose_ThrowException() throws {
         let nodes = CalculatorKeyList()
         nodes.append(.function(.closeBracket))
-        XCTAssertThrowsError(try calculation.simplifyBracket(for: nodes)) { error in
+        XCTAssertThrowsError(try calculation.simplifyBracket(for: nodes, with: [:])) { error in
             XCTAssertEqual(error as? CalculatorPairCommandError, .invalidClose)
         }
     }
@@ -139,7 +139,7 @@ final class ScientificCalculatorCalculationTests: XCTestCase {
         nodes.append(.function(.sin))
         nodes.append(.number(.three))
         nodes.append(.number(.zero))
-        XCTAssertEqual(try calculation.simplifyBracket(for: nodes).text, "2x9sin30")
+        XCTAssertEqual(try calculation.simplifyBracket(for: nodes, with: [:]).text, "2x9sin30")
     }
 
     func testScientificCalculatorCalculation_WithoutBracket_Calculate() throws {
@@ -152,7 +152,7 @@ final class ScientificCalculatorCalculationTests: XCTestCase {
         nodes.append(.function(.sin))
         nodes.append(.number(.three))
         nodes.append(.number(.zero))
-        XCTAssertEqual(try calculation.calculate(for: nodes), 4)
+        XCTAssertEqual(try calculation.calculate(for: nodes, with: [:]), 4)
     }
 
     func testScientificCalculatorCalculation_WithBracket_Calculate() throws {
@@ -170,6 +170,6 @@ final class ScientificCalculatorCalculationTests: XCTestCase {
         nodes.append(.function(.sin))
         nodes.append(.number(.three))
         nodes.append(.number(.zero))
-        XCTAssertEqual(try calculation.calculate(for: nodes), 9)
+        XCTAssertEqual(try calculation.calculate(for: nodes, with: [:]), 9)
     }
 }

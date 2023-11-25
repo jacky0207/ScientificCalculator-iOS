@@ -9,5 +9,5 @@ protocol CalculatorControlPanel {
     func appendKey(_ key: CalculatorKey, to keys: CalculatorKeyList)
     func delete(for keys: CalculatorKeyList)
     func clearAll(for keys: CalculatorKeyList)
-    func calculate(for keys: CalculatorKeyList) throws -> Double
+    func calculate(for keys: CalculatorKeyList, with values: [CalculatorVariable: Double]) throws -> Double
 }
