@@ -33,6 +33,9 @@ class CalculatorKeyTraveler {
             case .operator(let `operator`):
                 switch `operator` {
                 case .plus, .minus:  // ++--+-12345
+                    if head === node {
+                        break outer  // 1"+",-,123
+                    }
                     if let prev2 = prev.prev {
                         if case .number = prev2.key {
                             break outer
