@@ -89,10 +89,24 @@ final class ScientificCalculatorKeyTravelerTests: XCTestCase {
         XCTAssertEqual(traveler.prevNumberHead(of: `operator`)?.key.text, "-")
     }
 
-    func testScientificCalculatorKeyTraveler_PrevNumberWithFunctionHead_PlusMinusHead() throws {
+    func testScientificCalculatorKeyTraveler_PrevNumberWithVariableHead_PlusMinusHead() throws {
         let keys = CalculatorKeyList()
         let `operator` = CalculatorKeyNode(key: .operator(.plus))
-        keys.append(.function(.closeBracket))
+        keys.append(.variable(.a))
+        keys.append(.operator(.minus))
+        keys.append(.operator(.plus))
+        keys.append(.operator(.minus))
+        keys.append(.operator(.plus))
+        keys.append(.number(.one))
+        keys.append(.number(.two))
+        keys.append(from: `operator`)
+        XCTAssertEqual(traveler.prevNumberHead(of: `operator`)?.key.text, "-")
+    }
+
+    func testScientificCalculatorKeyTraveler_PrevNumberWithBracketHead_PlusMinusHead() throws {
+        let keys = CalculatorKeyList()
+        let `operator` = CalculatorKeyNode(key: .operator(.plus))
+        keys.append(.bracket(.closeBracket))
         keys.append(.operator(.minus))
         keys.append(.operator(.plus))
         keys.append(.operator(.minus))
@@ -101,6 +115,20 @@ final class ScientificCalculatorKeyTravelerTests: XCTestCase {
         keys.append(.number(.two))
         keys.append(from: `operator`)
         XCTAssertEqual(traveler.prevNumberHead(of: `operator`)?.key.text, "+")
+    }
+
+    func testScientificCalculatorKeyTraveler_PrevNumberWithBracketTail_PlusMinusHead() throws {
+        let keys = CalculatorKeyList()
+        let `operator` = CalculatorKeyNode(key: .operator(.plus))
+        keys.append(.operator(.minus))
+        keys.append(.operator(.plus))
+        keys.append(.operator(.minus))
+        keys.append(.operator(.plus))
+        keys.append(.number(.one))
+        keys.append(.number(.two))
+        keys.append(.bracket(.closeBracket))
+        keys.append(from: `operator`)
+        XCTAssertEqual(traveler.prevNumberHead(of: `operator`)?.key.text, nil)
     }
 
     func testScientificCalculatorKeyTraveler_NextNumber_NotExist() throws {
@@ -158,11 +186,39 @@ final class ScientificCalculatorKeyTravelerTests: XCTestCase {
         XCTAssertEqual(traveler.nextNumberTail(of: `operator`)?.key.text, nil)
     }
 
-    func testScientificCalculatorKeyTraveler_NextNumberWithFunctionHead_PlusMinusTail() throws {
+    func testScientificCalculatorKeyTraveler_NextNumberWithFunctionHead_VariableTail() throws {
         let keys = CalculatorKeyList()
         let `operator` = CalculatorKeyNode(key: .operator(.plus))
         keys.append(from: `operator`)
-        keys.append(.function(.openBracket))
+        keys.append(.function(.cos))
+        keys.append(.operator(.minus))
+        keys.append(.operator(.plus))
+        keys.append(.operator(.minus))
+        keys.append(.operator(.plus))
+        keys.append(.number(.one))
+        keys.append(.number(.two))
+        XCTAssertEqual(traveler.nextNumberTail(of: `operator`)?.key.text, nil)
+    }
+
+    func testScientificCalculatorKeyTraveler_NextNumberWithVariableHead_VariableTail() throws {
+        let keys = CalculatorKeyList()
+        let `operator` = CalculatorKeyNode(key: .operator(.plus))
+        keys.append(from: `operator`)
+        keys.append(.variable(.a))
+        keys.append(.operator(.minus))
+        keys.append(.operator(.plus))
+        keys.append(.operator(.minus))
+        keys.append(.operator(.plus))
+        keys.append(.number(.one))
+        keys.append(.number(.two))
+        XCTAssertEqual(traveler.nextNumberTail(of: `operator`)?.key.text, nil)
+    }
+
+    func testScientificCalculatorKeyTraveler_NextNumberWithBracketHead_PlusMinusTail() throws {
+        let keys = CalculatorKeyList()
+        let `operator` = CalculatorKeyNode(key: .operator(.plus))
+        keys.append(from: `operator`)
+        keys.append(.bracket(.openBracket))
         keys.append(.operator(.minus))
         keys.append(.operator(.plus))
         keys.append(.operator(.minus))

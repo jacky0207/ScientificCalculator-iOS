@@ -51,15 +51,15 @@ final class ScientificCalculatorTests: XCTestCase {
 
     func testScientificCalculator_Calculate() throws {
         calculator.appendKey(.number(.two))
-        calculator.appendKey(.function(.openBracket))
-        calculator.appendKey(.function(.openBracket))
+        calculator.appendKey(.bracket(.openBracket))
+        calculator.appendKey(.bracket(.openBracket))
         calculator.appendKey(.number(.one))
         calculator.appendKey(.operator(.plus))
         calculator.appendKey(.number(.two))
-        calculator.appendKey(.function(.closeBracket))
+        calculator.appendKey(.bracket(.closeBracket))
         calculator.appendKey(.operator(.multiply))
         calculator.appendKey(.number(.three))
-        calculator.appendKey(.function(.closeBracket))
+        calculator.appendKey(.bracket(.closeBracket))
         calculator.appendKey(.function(.sin))
         calculator.appendKey(.number(.three))
         calculator.appendKey(.number(.zero))
@@ -69,15 +69,15 @@ final class ScientificCalculatorTests: XCTestCase {
 
     func testScientificCalculator_CalculateToVariable() throws {
         calculator.appendKey(.number(.two))
-        calculator.appendKey(.function(.openBracket))
-        calculator.appendKey(.function(.openBracket))
+        calculator.appendKey(.bracket(.openBracket))
+        calculator.appendKey(.bracket(.openBracket))
         calculator.appendKey(.number(.one))
         calculator.appendKey(.operator(.plus))
         calculator.appendKey(.number(.two))
-        calculator.appendKey(.function(.closeBracket))
+        calculator.appendKey(.bracket(.closeBracket))
         calculator.appendKey(.operator(.multiply))
         calculator.appendKey(.number(.three))
-        calculator.appendKey(.function(.closeBracket))
+        calculator.appendKey(.bracket(.closeBracket))
         calculator.appendKey(.function(.sin))
         calculator.appendKey(.number(.three))
         calculator.appendKey(.number(.zero))
@@ -93,13 +93,13 @@ final class ScientificCalculatorTests: XCTestCase {
                 ScientificCalculatorProgramEquation(
                     variable: .x,
                     keys: CalculatorKeyList(
-                        .function(.openBracket),
+                        .bracket(.openBracket),
                         .operator(.minus),
                         .variable(.b),
                         .operator(.plus),
                         .function(.squareRoot),
                         .variable(.d),
-                        .function(.closeBracket),
+                        .bracket(.closeBracket),
                         .operator(.divide),
                         .number(.two),
                         .variable(.a)
@@ -108,13 +108,13 @@ final class ScientificCalculatorTests: XCTestCase {
                 ScientificCalculatorProgramEquation(
                     variable: .y,
                     keys: CalculatorKeyList(
-                        .function(.openBracket),
+                        .bracket(.openBracket),
                         .operator(.minus),
                         .variable(.b),
                         .operator(.minus),
                         .function(.squareRoot),
                         .variable(.d),
-                        .function(.closeBracket),
+                        .bracket(.closeBracket),
                         .operator(.divide),
                         .number(.two),
                         .variable(.a)
@@ -179,6 +179,22 @@ final class ScientificCalculatorTests: XCTestCase {
         try calculator.calculate()
         XCTAssertEqual(floor((calculator.storage.values[.y] ?? 0) * 1000) / 1000, -3.415)
         // finish
+        XCTAssertEqual(calculator.mode, .default)
+    }
+
+    func testScientificCalculator_ProgramMode_NotCalculateToVariable() throws {
+        calculator.execute(for: ScientificCalculatorProgram(
+            name: "",
+            equations: [ScientificCalculatorProgramEquation(variable: .a, keys: CalculatorKeyList(.number(.one)))],
+            subEquations: []
+        ))
+        XCTAssertEqual(calculator.mode, .program)
+        try calculator.calculate(to: .b)
+        XCTAssertEqual(calculator.mode, .program)
+    }
+
+    func testScientificCalculator_EmptyEquations_NotExecuteProgram() throws {
+        calculator.execute(for: ScientificCalculatorProgram.none)
         XCTAssertEqual(calculator.mode, .default)
     }
 }

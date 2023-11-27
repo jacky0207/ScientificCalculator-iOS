@@ -18,7 +18,9 @@ class ScientificCalculatorCommandFactory {
         case .function(let function):
             return functionCommandInstance(of: function)
         case .variable:
-            fatalError("Not supported number")
+            fatalError("Not supported variable")
+        case .bracket:
+            fatalError("Not supported bracket")
         }
     }
 
@@ -67,25 +69,11 @@ class ScientificCalculatorCommandFactory {
             return ScientificCalculatorCosCommand()
         case .tan:
             return ScientificCalculatorTanCommand()
-        case .openBracket, .closeBracket:
-            fatalError("Not supported function: \(type)")
         }
     }
 
-    func functionPairCommandInstance(of type: CalculatorFunction) -> CalculatorPairCommand {
+    func bracketPairCommandInstance(of type: CalculatorBracket) -> CalculatorPairCommand {
         switch type {
-        case .factorial:
-            fatalError("Not supported function: \(type)")
-        case .power, .inverseFraction, .square, .cube:
-            fatalError("Not supported function: \(type)")
-        case .root, .squareRoot, .cubeRoot:
-            fatalError("Not supported function: \(type)")
-        case .log, .naturalLog:
-            fatalError("Not supported function: \(type)")
-        case .powerOfTen, .exponential:
-            fatalError("Not supported function: \(type)")
-        case .sin, .cos, .tan:
-            fatalError("Not supported function: \(type)")
         case .openBracket, .closeBracket:
             return ScientificCalculatorBracketCommand()
         }

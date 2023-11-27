@@ -24,8 +24,8 @@ final class ScientificCalculatorPairCommandTests: XCTestCase {
     func testScientificCalculatorPairCommand_Execute() throws {
         let command = ScientificCalculatorTestPairCommand()
         let nodes = CalculatorKeyList()
-        let open = CalculatorKeyNode(key: .function(.openBracket))
-        let close = CalculatorKeyNode(key: .function(.closeBracket))
+        let open = CalculatorKeyNode(key: .bracket(.openBracket))
+        let close = CalculatorKeyNode(key: .bracket(.closeBracket))
         nodes.append(from: open)
         nodes.append(.number(.one))
         nodes.append(.operator(.plus))
@@ -42,8 +42,8 @@ final class ScientificCalculatorPairCommandTests: XCTestCase {
     func testScientificCalculatorPairCommand_WithHead_Execute() throws {
         let command = ScientificCalculatorTestPairCommand()
         let nodes = CalculatorKeyList()
-        let open = CalculatorKeyNode(key: .function(.openBracket))
-        let close = CalculatorKeyNode(key: .function(.closeBracket))
+        let open = CalculatorKeyNode(key: .bracket(.openBracket))
+        let close = CalculatorKeyNode(key: .bracket(.closeBracket))
         nodes.append(.number(.two))
         nodes.append(from: open)
         nodes.append(.number(.one))
@@ -58,11 +58,23 @@ final class ScientificCalculatorPairCommandTests: XCTestCase {
         XCTAssertEqual(result.newKeys.text, "x3")
     }
 
+    func testScientificCalculatorPairCommand_Invalid_ThrowException() throws {
+        let command = ScientificCalculatorTestPairCommand()
+        let nodes = CalculatorKeyList()
+        let open = CalculatorKeyNode(key: .bracket(.openBracket))
+        let close = CalculatorKeyNode(key: .bracket(.closeBracket))
+        nodes.append(from: open)
+        nodes.append(from: close)
+        XCTAssertThrowsError(try command.execute(from: open, to: close, convert: { $0 })) { error in
+            XCTAssertEqual(error as? CalculatorPairCommandError, .invalidMiddle)
+        }
+    }
+
     func testScientificCalculatorPairCommand_WithNumberTail_ThrowException() throws {
         let command = ScientificCalculatorTestPairCommand()
         let nodes = CalculatorKeyList()
-        let open = CalculatorKeyNode(key: .function(.openBracket))
-        let close = CalculatorKeyNode(key: .function(.closeBracket))
+        let open = CalculatorKeyNode(key: .bracket(.openBracket))
+        let close = CalculatorKeyNode(key: .bracket(.closeBracket))
         nodes.append(from: open)
         nodes.append(.number(.one))
         nodes.append(.operator(.plus))

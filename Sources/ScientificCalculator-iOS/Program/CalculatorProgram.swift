@@ -23,7 +23,7 @@ enum CalculatorProgramEquationType {
     var keys: CalculatorKeyList? {
         switch self {
         case .input:
-            return CalculatorKeyList()
+            return nil
         case .fixed(let calculatorKeyList):
             return calculatorKeyList
         }

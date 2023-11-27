@@ -41,6 +41,9 @@ class CalculatorKeyConverter {
             case .operator(let `operator`):
                 switch `operator` {
                 case .plus, .minus:
+                    if curr === head && curr.next == nil {  // +/- only
+                        throw CalculatorKeyConverterError.incorrectKeyType
+                    }
                     if let prev = curr.prev, case .number = prev.key {  // 123+45
                         throw CalculatorKeyConverterError.incorrectKeyType
                     }
@@ -58,6 +61,8 @@ class CalculatorKeyConverter {
             case .function:
                 throw CalculatorKeyConverterError.incorrectKeyType
             case .variable:
+                throw CalculatorKeyConverterError.incorrectKeyType
+            case .bracket:
                 throw CalculatorKeyConverterError.incorrectKeyType
             }
 

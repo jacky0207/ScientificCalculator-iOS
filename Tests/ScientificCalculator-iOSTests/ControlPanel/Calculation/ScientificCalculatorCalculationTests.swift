@@ -105,9 +105,21 @@ final class ScientificCalculatorCalculationTests: XCTestCase {
         XCTAssertEqual(try calculation.simplifyFunction(for: nodes).text, "24")
     }
 
+    func testScientificCalculatorCalculation_WithVariable_Simplify() throws {
+        let nodes = CalculatorKeyList()
+        nodes.append(.variable(.a))
+        XCTAssertEqual(try calculation.simplifyVariable(for: nodes, with: [.a: 1]).text, "1")
+    }
+
+    func testScientificCalculatorCalculation_WithoutVariable_Simplify() throws {
+        let nodes = CalculatorKeyList()
+        nodes.append(.variable(.a))
+        XCTAssertEqual(try calculation.simplifyVariable(for: nodes, with: [:]).text, "0")
+    }
+
     func testScientificCalculatorCalculation_BracketNotClose_ThrowException() throws {
         let nodes = CalculatorKeyList()
-        nodes.append(.function(.openBracket))
+        nodes.append(.bracket(.openBracket))
         nodes.append(.number(.one))
         nodes.append(.operator(.plus))
         nodes.append(.number(.two))
@@ -118,7 +130,7 @@ final class ScientificCalculatorCalculationTests: XCTestCase {
 
     func testScientificCalculatorCalculation_BracketNotOpenBeforeClose_ThrowException() throws {
         let nodes = CalculatorKeyList()
-        nodes.append(.function(.closeBracket))
+        nodes.append(.bracket(.closeBracket))
         XCTAssertThrowsError(try calculation.simplifyBracket(for: nodes, with: [:])) { error in
             XCTAssertEqual(error as? CalculatorPairCommandError, .invalidClose)
         }
@@ -127,15 +139,15 @@ final class ScientificCalculatorCalculationTests: XCTestCase {
     func testScientificCalculatorCalculation_Bracket_Simplify() throws {
         let nodes = CalculatorKeyList()
         nodes.append(.number(.two))
-        nodes.append(.function(.openBracket))
-        nodes.append(.function(.openBracket))
+        nodes.append(.bracket(.openBracket))
+        nodes.append(.bracket(.openBracket))
         nodes.append(.number(.one))
         nodes.append(.operator(.plus))
         nodes.append(.number(.two))
-        nodes.append(.function(.closeBracket))
+        nodes.append(.bracket(.closeBracket))
         nodes.append(.operator(.multiply))
         nodes.append(.number(.three))
-        nodes.append(.function(.closeBracket))
+        nodes.append(.bracket(.closeBracket))
         nodes.append(.function(.sin))
         nodes.append(.number(.three))
         nodes.append(.number(.zero))
@@ -158,15 +170,15 @@ final class ScientificCalculatorCalculationTests: XCTestCase {
     func testScientificCalculatorCalculation_WithBracket_Calculate() throws {
         let nodes = CalculatorKeyList()
         nodes.append(.number(.two))
-        nodes.append(.function(.openBracket))
-        nodes.append(.function(.openBracket))
+        nodes.append(.bracket(.openBracket))
+        nodes.append(.bracket(.openBracket))
         nodes.append(.number(.one))
         nodes.append(.operator(.plus))
         nodes.append(.number(.two))
-        nodes.append(.function(.closeBracket))
+        nodes.append(.bracket(.closeBracket))
         nodes.append(.operator(.multiply))
         nodes.append(.number(.three))
-        nodes.append(.function(.closeBracket))
+        nodes.append(.bracket(.closeBracket))
         nodes.append(.function(.sin))
         nodes.append(.number(.three))
         nodes.append(.number(.zero))

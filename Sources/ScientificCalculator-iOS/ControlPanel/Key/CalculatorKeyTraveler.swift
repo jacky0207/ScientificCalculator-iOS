@@ -24,11 +24,6 @@ class CalculatorKeyTraveler {
             }
             switch prev.key {
             case .number:
-                if head !== node {
-                    guard case .number = head.key else {  // "1"+12345
-                        break outer
-                    }
-                }
                 head = prev
             case .operator(let `operator`):
                 switch `operator` {
@@ -40,8 +35,8 @@ class CalculatorKeyTraveler {
                         if case .number = prev2.key {
                             break outer
                         }
-                        if case .function(let function) = prev2.key,
-                           function == .openBracket || function == .closeBracket {
+                        if case .bracket(let bracket) = prev2.key,
+                           bracket == .openBracket || bracket == .closeBracket {
                             break outer
                         }
                     }
@@ -52,6 +47,8 @@ class CalculatorKeyTraveler {
             case .function:
                 break outer
             case .variable:
+                break outer
+            case .bracket:
                 break outer
             }
         }
@@ -82,6 +79,8 @@ class CalculatorKeyTraveler {
             case .function:
                 break outer
             case .variable:
+                break outer
+            case .bracket:
                 break outer
             }
         }

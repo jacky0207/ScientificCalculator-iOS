@@ -10,6 +10,7 @@ enum CalculatorKey: Equatable, Hashable {
     case `operator`(_ operator: CalculatorOperator)
     case function(_ function: CalculatorFunction)
     case variable(_ variable: CalculatorVariable)
+    case bracket(_ bracket: CalculatorBracket)
 }
 
 extension CalculatorKey {
@@ -23,19 +24,8 @@ extension CalculatorKey {
             return function.rawValue
         case .variable(let variable):
             return variable.rawValue
-        }
-    }
-
-    var buttonText: String {
-        switch self {
-        case .number(let number):
-            return number.rawValue
-        case .operator(let `operator`):
-            return `operator`.rawValue
-        case .function(let function):
-            return function.buttonText
-        case .variable(let variable):
-            return variable.rawValue
+        case .bracket(let bracket):
+            return bracket.rawValue
         }
     }
 }
@@ -77,23 +67,6 @@ enum CalculatorFunction: String, CaseIterable {
     case sin = "sin"
     case cos = "cos"
     case tan = "tan"
-    case openBracket = "("
-    case closeBracket = ")"
-}
-
-extension CalculatorFunction {
-    var buttonText: String {
-        switch self {
-        case .factorial:
-            return "x\(rawValue)"
-        case .inverseFraction, .square, .cube:
-            return "x\(rawValue)"
-        case .powerOfTen, .exponential:
-            return "\(rawValue)x"
-        default:
-            return rawValue
-        }
-    }
 }
 
 enum CalculatorVariable: String, CaseIterable {
@@ -105,8 +78,13 @@ enum CalculatorVariable: String, CaseIterable {
     case y = "y"
 }
 
+enum CalculatorBracket: String, CaseIterable {
+    case openBracket = "("
+    case closeBracket = ")"
+}
+
 // MARK: - CalculatorKeyPair
 struct CalculatorKeyPair {
-    var open: CalculatorFunction
-    var close: CalculatorFunction
+    var open: CalculatorBracket
+    var close: CalculatorBracket
 }

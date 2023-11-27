@@ -39,6 +39,11 @@ final class ScientificCalculatorKeyConverterTests: XCTestCase {
         XCTAssertEqual(try converter.convertNumber(for: keys), 123.4)
     }
 
+    func testScientificCalculatorKeyConverter_WithEmptyList_ConvertNumber_ReturnZero() throws {
+        let keys = CalculatorKeyList()
+        XCTAssertEqual(try converter.convertNumber(for: keys), 0)
+    }
+
     func testScientificCalculatorKeyConverter_TailNotReach_throwException() throws {
         let keys = CalculatorKeyList()
         keys.append(.number(.one))
@@ -49,7 +54,15 @@ final class ScientificCalculatorKeyConverterTests: XCTestCase {
         }
     }
 
-    func testScientificCalculatorKeyConverter_IncorrectKeyType_throwException() throws {
+    func testScientificCalculatorKeyConverter_PlusMinusOnly_IncorrectKeyType() throws {
+        let keys = CalculatorKeyList()
+        keys.append(.operator(.plus))
+        XCTAssertThrowsError(try converter.convertNumber(from: keys.head!, to: keys.tail!)) { error in
+            XCTAssertEqual(error as? CalculatorKeyConverterError, CalculatorKeyConverterError.incorrectKeyType)
+        }
+    }
+
+    func testScientificCalculatorKeyConverter_PlusMinusMiddle_IncorrectKeyType() throws {
         let keys = CalculatorKeyList()
         keys.append(.number(.one))
         keys.append(.number(.two))
@@ -60,7 +73,31 @@ final class ScientificCalculatorKeyConverterTests: XCTestCase {
         }
     }
 
-    func testScientificCalculatorKeyConverter_InvalidNumber_throwException() throws {
+    func testScientificCalculatorKeyConverter_ContainsMultiplyDivide_IncorrectKeyType() throws {
+        let keys = CalculatorKeyList()
+        keys.append(.operator(.multiply))
+        XCTAssertThrowsError(try converter.convertNumber(from: keys.head!, to: keys.tail!)) { error in
+            XCTAssertEqual(error as? CalculatorKeyConverterError, CalculatorKeyConverterError.incorrectKeyType)
+        }
+    }
+
+    func testScientificCalculatorKeyConverter_ContainsFunction_IncorrectKeyType() throws {
+        let keys = CalculatorKeyList()
+        keys.append(.bracket(.openBracket))
+        XCTAssertThrowsError(try converter.convertNumber(from: keys.head!, to: keys.tail!)) { error in
+            XCTAssertEqual(error as? CalculatorKeyConverterError, CalculatorKeyConverterError.incorrectKeyType)
+        }
+    }
+
+    func testScientificCalculatorKeyConverter_ContainsVariable_IncorrectKeyType() throws {
+        let keys = CalculatorKeyList()
+        keys.append(.variable(.a))
+        XCTAssertThrowsError(try converter.convertNumber(from: keys.head!, to: keys.tail!)) { error in
+            XCTAssertEqual(error as? CalculatorKeyConverterError, CalculatorKeyConverterError.incorrectKeyType)
+        }
+    }
+
+    func testScientificCalculatorKeyConverter_InvalidNumber_ThrowException() throws {
         let keys = CalculatorKeyList()
         keys.append(.number(.one))
         keys.append(.number(.two))
