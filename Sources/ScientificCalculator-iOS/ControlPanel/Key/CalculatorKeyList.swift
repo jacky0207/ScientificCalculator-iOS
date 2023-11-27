@@ -27,6 +27,12 @@ class CalculatorKeyList {
         append(from: head)
     }
 
+    init(_ keys: CalculatorKey...) {
+        for key in keys {
+            append(key)
+        }
+    }
+
     var head: CalculatorKeyNode? {
         return entry.next
     }
