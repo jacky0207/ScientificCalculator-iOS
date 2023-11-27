@@ -9,18 +9,28 @@ import XCTest
 @testable import ScientificCalculator_iOS
 
 fileprivate class ScientificCalculatorTestCommand: ScientificCalculatorCommand {
-    var type: CalculatorCommandType
+    var headType: CalculatorCommandType
+    var tailType: CalculatorCommandType
 
     init(type: CalculatorCommandType) {
-        self.type = type
+        self.headType = type
+        self.tailType = type
+    }
+
+    init(
+        headType: CalculatorCommandType,
+        tailType: CalculatorCommandType
+    ) {
+        self.headType = headType
+        self.tailType = tailType
     }
 
     override func previousNumberType() -> CalculatorCommandType {
-        return type
+        return headType
     }
 
     override func nextNumberType() -> CalculatorCommandType {
-        return type
+        return tailType
     }
 
     override func answer(left: Double, right: Double) throws -> Double {
@@ -130,5 +140,22 @@ final class ScientificCalculatorCommandTests: XCTestCase {
         XCTAssertThrowsError(try command.execute(node: `operator`)) { error in
             XCTAssertEqual(error as? CalculatorCommandError, CalculatorCommandError.invalidTail)
         }
+    }
+
+    func testScientificCalculatorCommand_NotExistTailPlusMinusNumber_Execute() throws {
+        let command = ScientificCalculatorTestCommand(
+            headType: .exist,
+            tailType: .notExist
+        )
+        let nodes = CalculatorKeyList()
+        let `operator` = CalculatorKeyNode(key: .function(.square))
+        nodes.append(.number(.two))
+        nodes.append(from: `operator`)
+        nodes.append(.operator(.plus))
+        nodes.append(.number(.three))
+        let result = try command.execute(node: `operator`)
+        XCTAssertEqual(result.head.key.text, "2")
+        XCTAssertEqual(result.tail.key.text, "\u{00B2}")
+        XCTAssertEqual(result.newKeys.text, "3")
     }
 }
