@@ -10,8 +10,8 @@ import XCTest
 
 final class ScientificCalculatorRootCommandTests: XCTestCase {
     let rootCommand: CalculatorCommand = ScientificCalculatorRootCommand()
-    let squareCommand: CalculatorCommand = ScientificCalculatorSquareRootCommand()
-    let cubeCommand: CalculatorCommand = ScientificCalculatorCubeRootCommand()
+    let squareRootCommand: CalculatorCommand = ScientificCalculatorSquareRootCommand()
+    let cubeRootCommand: CalculatorCommand = ScientificCalculatorCubeRootCommand()
 
     override func setUpWithError() throws {
 
@@ -39,7 +39,7 @@ final class ScientificCalculatorRootCommandTests: XCTestCase {
         nodes.append(.number(.two))
         nodes.append(from: `operator`)
         nodes.append(.number(.nine))
-        let result = try squareCommand.execute(node: `operator`)
+        let result = try squareRootCommand.execute(node: `operator`)
         XCTAssertEqual(result.head.key.text, "2")
         XCTAssertEqual(result.tail.key.text, "9")
         XCTAssertEqual(result.newKeys.text, "6")
@@ -52,7 +52,7 @@ final class ScientificCalculatorRootCommandTests: XCTestCase {
         nodes.append(from: `operator`)
         nodes.append(.number(.two))
         nodes.append(.number(.seven))
-        let result = try cubeCommand.execute(node: `operator`)
+        let result = try cubeRootCommand.execute(node: `operator`)
         XCTAssertEqual(result.head.key.text, "2")
         XCTAssertEqual(result.tail.key.text, "7")
         XCTAssertEqual(result.newKeys.text, "6")

@@ -57,6 +57,8 @@ class CalculatorKeyConverter {
                 }
             case .function:
                 throw CalculatorKeyConverterError.incorrectKeyType
+            case .variable:
+                throw CalculatorKeyConverterError.incorrectKeyType
             }
 
             if curr === tail {

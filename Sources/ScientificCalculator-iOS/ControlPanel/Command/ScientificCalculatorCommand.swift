@@ -46,6 +46,9 @@ open class ScientificCalculatorCommand: CalculatorCommand {
     }
 
     func previousNumber(from head: CalculatorKeyNode, before node: CalculatorKeyNode) throws -> Double {
+        if head === node {  // no previous number
+            return CalculatorCommandType.defaultNumber
+        }
         switch previousNumberType() {
         case .exist:
             guard let tail = node.prev else {
@@ -66,24 +69,48 @@ open class ScientificCalculatorCommand: CalculatorCommand {
         return .exist
     }
 
+    func nextNumberSignEnabled() -> Bool {
+        return false
+    }
+
     func nextNumberTail(of node: CalculatorKeyNode) throws -> CalculatorKeyNode {
         switch nextNumberType() {
         case .exist:
+            if !nextNumberSignEnabled() {
+                guard let next = node.next, case .number = next.key else {
+                    throw CalculatorCommandError.invalidTail
+                }
+            }
             guard let node = CalculatorKeyTraveler().nextNumberTail(of: node) else {
                 throw CalculatorCommandError.invalidTail
             }
             return node
         case .optional:
+            if !nextNumberSignEnabled() {
+                guard let next = node.next, case .number = next.key else {
+                    return node
+                }
+            }
             return CalculatorKeyTraveler().nextNumberTail(of: node) ?? node
         case .notExist:
-            guard let _ = CalculatorKeyTraveler().nextNumberTail(of: node) else {
+            if nextNumberSignEnabled() {
+                if CalculatorKeyTraveler().nextNumberTail(of: node) != nil {
+                    throw CalculatorCommandError.invalidTail
+                }
+                return node
+            } else {
+                if let next = node.next, case .number = next.key {
+                    throw CalculatorCommandError.invalidTail
+                }
                 return node
             }
-            throw CalculatorCommandError.invalidTail
         }
     }
 
     func nextNumber(after node: CalculatorKeyNode, to tail: CalculatorKeyNode) throws -> Double {
+        if node === tail {  // no next number
+            return CalculatorCommandType.defaultNumber
+        }
         switch nextNumberType() {
         case .exist:
             guard let head = node.next else {

@@ -27,16 +27,26 @@ class ScientificCalculatorCalculation: CalculatorCalculation {
         )
     }
 
-    func simplifyBracket(for keys: CalculatorKeyList) throws -> CalculatorKeyList {
-        return try executeCalculateKeyPair(
-            CalculatorKeyPair.bracketCommandKeyPair,
+    func simplifyVariable(for keys: CalculatorKeyList, with values: [CalculatorVariable: Double]) throws -> CalculatorKeyList {
+        return try executeCalculateVariable(
+            CalculatorVariable.variableCommandKeys,
+            with: values,
             for: keys
         )
     }
 
-    func calculate(for keys: CalculatorKeyList) throws -> Double {
+    func simplifyBracket(for keys: CalculatorKeyList, with values: [CalculatorVariable: Double]) throws -> CalculatorKeyList {
+        return try executeCalculateKeyPair(
+            CalculatorKeyPair.bracketCommandKeyPair,
+            with: values,
+            for: keys
+        )
+    }
+
+    func calculate(for keys: CalculatorKeyList, with values: [CalculatorVariable: Double]) throws -> Double {
         var newKeys = keys.copy() as! CalculatorKeyList
-        newKeys = try simplifyBracket(for: newKeys)
+        newKeys = try simplifyBracket(for: newKeys, with: values)
+        newKeys = try simplifyVariable(for: newKeys, with: values)
         newKeys = try simplifyFunction(for: newKeys)
         newKeys = try simplifyMultiplyDivide(for: newKeys)
         newKeys = try simplifyPlusMinus(for: newKeys)

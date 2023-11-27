@@ -10,9 +10,11 @@ protocol CalculatorCalculation {
     func simplifyPlusMinus(for keys: CalculatorKeyList) throws -> CalculatorKeyList
     func simplifyMultiplyDivide(for keys: CalculatorKeyList) throws -> CalculatorKeyList
     func simplifyFunction(for keys: CalculatorKeyList) throws -> CalculatorKeyList
-    func executeCalculateKeyPair(_ keyPair: CalculatorKeyPair, for pressedKeys: CalculatorKeyList) throws -> CalculatorKeyList
-    func simplifyBracket(for keys: CalculatorKeyList) throws -> CalculatorKeyList
-    func calculate(for keys: CalculatorKeyList) throws -> Double
+    func executeCalculateVariable(_ variables: [CalculatorVariable], with values: [CalculatorVariable: Double], for pressedKeys: CalculatorKeyList) throws -> CalculatorKeyList
+    func simplifyVariable(for keys: CalculatorKeyList, with values: [CalculatorVariable: Double]) throws -> CalculatorKeyList
+    func executeCalculateKeyPair(_ keyPair: CalculatorKeyPair, with values: [CalculatorVariable: Double], for pressedKeys: CalculatorKeyList) throws -> CalculatorKeyList
+    func simplifyBracket(for keys: CalculatorKeyList, with values: [CalculatorVariable: Double]) throws -> CalculatorKeyList
+    func calculate(for keys: CalculatorKeyList, with values: [CalculatorVariable: Double]) throws -> Double
 }
 
 extension CalculatorCalculation {
@@ -34,7 +36,25 @@ extension CalculatorCalculation {
         return pressedKeys
     }
 
-    func executeCalculateKeyPair(_ keyPair: CalculatorKeyPair, for pressedKeys: CalculatorKeyList) throws -> CalculatorKeyList {
+    func executeCalculateVariable(_ variables: [CalculatorVariable], with values: [CalculatorVariable: Double], for pressedKeys: CalculatorKeyList) throws -> CalculatorKeyList {
+        var node = pressedKeys.head
+        while true {
+            guard let curr = node else {
+                break
+            }
+            if case .variable(let variable) = curr.key, variables.contains(variable) {
+                let command = ScientificCalculatorCommandFactory.shared.variableCommandInstance(of: variable)
+                let result = try command.execute(node: curr, value: values[variable] ?? 0.0)
+                CalculatorKeyEditor().replace(pressedKeys, withResult: result)
+                node = result.newKeys.tail?.next
+            } else {
+                node = curr.next
+            }
+        }
+        return pressedKeys
+    }
+
+    func executeCalculateKeyPair(_ keyPair: CalculatorKeyPair, with values: [CalculatorVariable: Double], for pressedKeys: CalculatorKeyList) throws -> CalculatorKeyList {
         var node = pressedKeys.head
         var openBracketStack = [CalculatorKeyNode]()
         while true {
@@ -50,7 +70,7 @@ extension CalculatorCalculation {
                 }
                 let command = ScientificCalculatorCommandFactory.shared.functionPairCommandInstance(of: function)
                 let result = try command.execute(from: openBracket, to: curr) { keys in
-                    try CalculatorKeyConverter().convertKeys(from: calculate(for: keys))
+                    try CalculatorKeyConverter().convertKeys(from: calculate(for: keys, with: values))
                 }
                 CalculatorKeyEditor().replace(pressedKeys, withResult: result)
                 node = result.newKeys.tail?.next

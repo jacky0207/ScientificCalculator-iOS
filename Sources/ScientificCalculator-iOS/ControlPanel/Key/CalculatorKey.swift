@@ -9,6 +9,7 @@ enum CalculatorKey: Equatable, Hashable {
     case number(_ number: CalculatorNumber)
     case `operator`(_ operator: CalculatorOperator)
     case function(_ function: CalculatorFunction)
+    case variable(_ variable: CalculatorVariable)
 }
 
 extension CalculatorKey {
@@ -20,6 +21,8 @@ extension CalculatorKey {
             return `operator`.rawValue
         case .function(let function):
             return function.rawValue
+        case .variable(let variable):
+            return variable.rawValue
         }
     }
 
@@ -31,6 +34,8 @@ extension CalculatorKey {
             return `operator`.rawValue
         case .function(let function):
             return function.buttonText
+        case .variable(let variable):
+            return variable.rawValue
         }
     }
 }
@@ -89,6 +94,15 @@ extension CalculatorFunction {
             return rawValue
         }
     }
+}
+
+enum CalculatorVariable: String, CaseIterable {
+    case a = "a"
+    case b = "b"
+    case c = "c"
+    case d = "d"
+    case x = "x"
+    case y = "y"
 }
 
 // MARK: - CalculatorKeyPair

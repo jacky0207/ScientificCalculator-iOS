@@ -42,7 +42,7 @@ final class ScientificCalculatorOperatorCommandTests: XCTestCase {
         let result = try plusCommand.execute(node: `operator`)
         XCTAssertEqual(result.head.key.text, "+")
         XCTAssertEqual(result.tail.key.text, "+")
-        XCTAssertEqual(result.newKeys.text, "+2")
+        XCTAssertEqual(result.newKeys.text, "+")
     }
 
     func testScientificCalculatorOperatorCommand_Minus_Execute() throws {
@@ -65,7 +65,7 @@ final class ScientificCalculatorOperatorCommandTests: XCTestCase {
         let result = try minusCommand.execute(node: `operator`)
         XCTAssertEqual(result.head.key.text, "-")
         XCTAssertEqual(result.tail.key.text, "-")
-        XCTAssertEqual(result.newKeys.text, "-2")
+        XCTAssertEqual(result.newKeys.text, "-")
     }
 
     func testScientificCalculatorOperatorCommand_Multliply_Execute() throws {

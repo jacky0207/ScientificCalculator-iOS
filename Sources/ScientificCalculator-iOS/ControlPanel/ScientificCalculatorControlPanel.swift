@@ -18,7 +18,7 @@ class ScientificCalculatorControlPanel: CalculatorControlPanel {
         keys.removeAll()
     }
 
-    func calculate(for keys: CalculatorKeyList) throws -> Double {
-        return try ScientificCalculatorCalculation().calculate(for: keys)
+    func calculate(for keys: CalculatorKeyList, with values: [CalculatorVariable: Double]) throws -> Double {
+        return try ScientificCalculatorCalculation().calculate(for: keys, with: values)
     }
 }

@@ -17,6 +17,8 @@ class ScientificCalculatorCommandFactory {
             return operatorCommandInstance(of: `operator`)
         case .function(let function):
             return functionCommandInstance(of: function)
+        case .variable:
+            fatalError("Not supported number")
         }
     }
 
@@ -48,7 +50,7 @@ class ScientificCalculatorCommandFactory {
         case .root:
             return ScientificCalculatorRootCommand()
         case .squareRoot:
-            return ScientificCalculatorSquareCommand()
+            return ScientificCalculatorSquareRootCommand()
         case .cubeRoot:
             return ScientificCalculatorCubeRootCommand()
         case .log:
@@ -86,6 +88,13 @@ class ScientificCalculatorCommandFactory {
             fatalError("Not supported function: \(type)")
         case .openBracket, .closeBracket:
             return ScientificCalculatorBracketCommand()
+        }
+    }
+
+    func variableCommandInstance(of type: CalculatorVariable) -> CalculatorVariableCommand {
+        switch type {
+        case .a, .b, .c, .d, .x, .y:
+            return ScientificCalculatorVariableCommand()
         }
     }
 }
