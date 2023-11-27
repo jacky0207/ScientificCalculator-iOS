@@ -91,6 +91,8 @@ extension CalculatorKey {
                     return true
                 case .sin, .cos, .tan:
                     return true
+                case .inverseSin, .inverseCos, .inverseTan:
+                    return true
                 }
             }
             .map { .function($0) }

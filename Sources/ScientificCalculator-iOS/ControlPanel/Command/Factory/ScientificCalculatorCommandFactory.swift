@@ -69,6 +69,12 @@ class ScientificCalculatorCommandFactory {
             return ScientificCalculatorCosCommand()
         case .tan:
             return ScientificCalculatorTanCommand()
+        case .inverseSin:
+            return ScientificCalculatorInverseSinCommand()
+        case .inverseCos:
+            return ScientificCalculatorInverseCosCommand()
+        case .inverseTan:
+            return ScientificCalculatorInverseTanCommand()
         }
     }
 
