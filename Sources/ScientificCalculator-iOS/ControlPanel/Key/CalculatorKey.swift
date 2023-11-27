@@ -101,6 +101,8 @@ enum CalculatorVariable: String, CaseIterable {
     case b = "b"
     case c = "c"
     case d = "d"
+    case x = "x"
+    case y = "y"
 }
 
 // MARK: - CalculatorKeyPair

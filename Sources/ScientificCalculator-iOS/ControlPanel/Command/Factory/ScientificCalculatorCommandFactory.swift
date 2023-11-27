@@ -93,7 +93,7 @@ class ScientificCalculatorCommandFactory {
 
     func variableCommandInstance(of type: CalculatorVariable) -> CalculatorVariableCommand {
         switch type {
-        case .a, .b, .c, .d:
+        case .a, .b, .c, .d, .x, .y:
             return ScientificCalculatorVariableCommand()
         }
     }
