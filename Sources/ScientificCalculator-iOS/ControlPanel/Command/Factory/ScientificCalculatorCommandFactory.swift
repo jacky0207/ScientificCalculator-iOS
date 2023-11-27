@@ -50,7 +50,7 @@ class ScientificCalculatorCommandFactory {
         case .root:
             return ScientificCalculatorRootCommand()
         case .squareRoot:
-            return ScientificCalculatorSquareCommand()
+            return ScientificCalculatorSquareRootCommand()
         case .cubeRoot:
             return ScientificCalculatorCubeRootCommand()
         case .log:
