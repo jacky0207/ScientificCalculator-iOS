@@ -13,6 +13,8 @@ protocol Calculator {
     var displayScreen: CalculatorDisplayScreen { get }
     var controlPanel: CalculatorControlPanel { get }
     var programExecutor: CalculatorProgramExecutor { get }
+    // additional components
+    var logHistory: CalculatorLogHistory { get }
     // accessible property
     var text: String { get }
     var answer: Double { get }
