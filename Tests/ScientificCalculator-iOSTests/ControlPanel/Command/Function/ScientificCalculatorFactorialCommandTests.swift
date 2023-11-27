@@ -64,4 +64,26 @@ final class ScientificCalculatorFactorialCommandTests: XCTestCase {
         XCTAssertEqual(result.tail.key.text, "!")
         XCTAssertEqual(result.newKeys.text, "-24")
     }
+
+    func testScientificCalculatorFactorialCommand_ZeroHead_ReturnOne() throws {
+        let nodes = CalculatorKeyList()
+        let `operator` = CalculatorKeyNode(key: .function(.factorial))
+        nodes.append(.number(.zero))
+        nodes.append(from: `operator`)
+        let result = try factorialCommand.execute(node: `operator`)
+        XCTAssertEqual(result.head.key.text, "0")
+        XCTAssertEqual(result.tail.key.text, "!")
+        XCTAssertEqual(result.newKeys.text, "1")
+    }
+
+    func testScientificCalculatorFactorialCommand_OneHead_ReturnOne() throws {
+        let nodes = CalculatorKeyList()
+        let `operator` = CalculatorKeyNode(key: .function(.factorial))
+        nodes.append(.number(.one))
+        nodes.append(from: `operator`)
+        let result = try factorialCommand.execute(node: `operator`)
+        XCTAssertEqual(result.head.key.text, "1")
+        XCTAssertEqual(result.tail.key.text, "!")
+        XCTAssertEqual(result.newKeys.text, "1")
+    }
 }

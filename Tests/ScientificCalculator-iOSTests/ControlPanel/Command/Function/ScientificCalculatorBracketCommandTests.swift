@@ -21,8 +21,8 @@ final class ScientificCalculatorBracketCommandTests: XCTestCase {
 
     func testScientificCalculatorBracketCommand_Execute() throws {
         let nodes = CalculatorKeyList()
-        let open = CalculatorKeyNode(key: .function(.openBracket))
-        let close = CalculatorKeyNode(key: .function(.closeBracket))
+        let open = CalculatorKeyNode(key: .bracket(.openBracket))
+        let close = CalculatorKeyNode(key: .bracket(.closeBracket))
         nodes.append(from: open)
         nodes.append(.number(.one))
         nodes.append(.operator(.plus))

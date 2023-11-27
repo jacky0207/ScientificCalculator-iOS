@@ -42,7 +42,6 @@ protocol CalculatorCommand {
     func previousNumberHead(of node: CalculatorKeyNode) throws -> CalculatorKeyNode
     func previousNumber(from head: CalculatorKeyNode, before node: CalculatorKeyNode) throws -> Double
     func nextNumberType() -> CalculatorCommandType
-    func nextNumberSignEnabled() -> Bool
     func nextNumberTail(of node: CalculatorKeyNode) throws -> CalculatorKeyNode
     func nextNumber(after node: CalculatorKeyNode, to tail: CalculatorKeyNode) throws -> Double
     func answer(left: Double, right: Double) throws -> Double
@@ -92,8 +91,6 @@ extension CalculatorKey {
                     return true
                 case .sin, .cos, .tan:
                     return true
-                case .openBracket, .closeBracket:
-                    return false
                 }
             }
             .map { .function($0) }

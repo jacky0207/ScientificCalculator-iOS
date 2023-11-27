@@ -61,14 +61,14 @@ extension CalculatorCalculation {
             guard let curr = node else {
                 break
             }
-            if case .function(let function) = curr.key, keyPair.open == function {
+            if case .bracket(let bracket) = curr.key, keyPair.open == bracket {
                 openBracketStack.append(curr)
                 node = curr.next
-            } else if case .function(let function) = curr.key, keyPair.close == function {
+            } else if case .bracket(let bracket) = curr.key, keyPair.close == bracket {
                 guard let openBracket = openBracketStack.popLast() else {
                     throw CalculatorPairCommandError.invalidClose
                 }
-                let command = ScientificCalculatorCommandFactory.shared.functionPairCommandInstance(of: function)
+                let command = ScientificCalculatorCommandFactory.shared.bracketPairCommandInstance(of: bracket)
                 let result = try command.execute(from: openBracket, to: curr) { keys in
                     try CalculatorKeyConverter().convertKeys(from: calculate(for: keys, with: values))
                 }

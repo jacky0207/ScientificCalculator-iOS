@@ -46,20 +46,14 @@ open class ScientificCalculatorCommand: CalculatorCommand {
     }
 
     func previousNumber(from head: CalculatorKeyNode, before node: CalculatorKeyNode) throws -> Double {
-        if head === node {  // no previous number
-            return CalculatorCommandType.defaultNumber
-        }
         switch previousNumberType() {
         case .exist:
-            guard let tail = node.prev else {
-                throw CalculatorCommandError.invalidHead
-            }
-            return try number(from: head, to: tail)
+            return try number(from: head, to: node.prev!)  // throw in previousNumberHead(of:)
         case .optional:
-            guard let tail = node.prev else {
+            if head === node {  // no previous number but previous key may exist
                 return CalculatorCommandType.defaultNumber
             }
-            return try number(from: head, to: tail)
+            return try number(from: head, to: node.prev!)
         case .notExist:
             return CalculatorCommandType.defaultNumber
         }
@@ -69,59 +63,32 @@ open class ScientificCalculatorCommand: CalculatorCommand {
         return .exist
     }
 
-    func nextNumberSignEnabled() -> Bool {
-        return false
-    }
-
     func nextNumberTail(of node: CalculatorKeyNode) throws -> CalculatorKeyNode {
         switch nextNumberType() {
         case .exist:
-            if !nextNumberSignEnabled() {
-                guard let next = node.next, case .number = next.key else {
-                    throw CalculatorCommandError.invalidTail
-                }
-            }
             guard let node = CalculatorKeyTraveler().nextNumberTail(of: node) else {
                 throw CalculatorCommandError.invalidTail
             }
             return node
         case .optional:
-            if !nextNumberSignEnabled() {
-                guard let next = node.next, case .number = next.key else {
-                    return node
-                }
-            }
             return CalculatorKeyTraveler().nextNumberTail(of: node) ?? node
         case .notExist:
-            if nextNumberSignEnabled() {
-                if CalculatorKeyTraveler().nextNumberTail(of: node) != nil {
-                    throw CalculatorCommandError.invalidTail
-                }
-                return node
-            } else {
-                if let next = node.next, case .number = next.key {
-                    throw CalculatorCommandError.invalidTail
-                }
-                return node
+            if let next = node.next, case .number = next.key {  // don't use CalculatorKeyTraveler.nextNumberTail(of:) i.e. 2^2+1, where "+" is not a sign
+                throw CalculatorCommandError.invalidTail
             }
+            return node
         }
     }
 
     func nextNumber(after node: CalculatorKeyNode, to tail: CalculatorKeyNode) throws -> Double {
-        if node === tail {  // no next number
-            return CalculatorCommandType.defaultNumber
-        }
         switch nextNumberType() {
         case .exist:
-            guard let head = node.next else {
-                throw CalculatorCommandError.invalidTail
-            }
-            return try number(from: head, to: tail)
+            return try number(from: node.next!, to: tail)  // throw in nextNumberTail(of:)
         case .optional:
-            guard let head = node.next else {
+            if node === tail {  // no next number but next key may exist
                 return CalculatorCommandType.defaultNumber
             }
-            return try number(from: head, to: tail)
+            return try number(from: node.next!, to: tail)
         case .notExist:
             return CalculatorCommandType.defaultNumber
         }
