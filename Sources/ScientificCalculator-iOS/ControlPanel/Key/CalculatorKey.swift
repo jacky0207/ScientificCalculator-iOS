@@ -67,6 +67,9 @@ enum CalculatorFunction: String, CaseIterable {
     case sin = "sin"
     case cos = "cos"
     case tan = "tan"
+    case inverseSin = "sin\u{207B}\u{00B9}"
+    case inverseCos = "cos\u{207B}\u{00B9}"
+    case inverseTan = "tan\u{207B}\u{00B9}"
 }
 
 enum CalculatorVariable: String, CaseIterable {
