@@ -197,4 +197,66 @@ final class ScientificCalculatorTests: XCTestCase {
         calculator.execute(for: ScientificCalculatorProgram.none)
         XCTAssertEqual(calculator.mode, .default)
     }
+
+    func testScientificCalculator_Calculate_AppendLog() throws {
+        calculator.appendKey(.number(.one))
+        calculator.appendKey(.operator(.plus))
+        calculator.appendKey(.number(.two))
+        try calculator.calculate()
+        let log = calculator.logHistory.logs.last
+        XCTAssertEqual(log?.keys.text, "1+2")
+        XCTAssertEqual(log?.answer, 3)
+    }
+
+    func testScientificCalculator_CalculateToVariable_AppendLog() throws {
+        calculator.appendKey(.number(.one))
+        calculator.appendKey(.operator(.plus))
+        calculator.appendKey(.number(.two))
+        try calculator.calculate(to: .a)
+        let log = calculator.logHistory.logs.last
+        XCTAssertEqual(log?.keys.text, "1+2")
+        XCTAssertEqual(log?.answer, 3)
+    }
+
+    func testScientificCalculator_Program_AppendLog() throws {
+        let program = ScientificCalculatorProgram(
+            name: "",
+            equations: [
+                ScientificCalculatorProgramEquation(
+                    variable: .x,
+                    keys: CalculatorKeyList(
+                        .bracket(.openBracket),
+                        .number(.one),
+                        .operator(.plus),
+                        .variable(.a),
+                        .bracket(.closeBracket),
+                        .operator(.multiply),
+                        .variable(.a),
+                        .operator(.divide),
+                        .number(.two)
+                    )
+                ),
+            ],
+            subEquations: [
+                ScientificCalculatorProgramSubEquation(
+                    variable: .a,
+                    type: .input
+                ),
+            ]
+        )
+        calculator.execute(for: program)
+        calculator.appendKey(.number(.one))
+        calculator.appendKey(.number(.zero))
+        // sub-equation
+        try calculator.calculate()
+        let subEquationLog = calculator.logHistory.logs.last
+        XCTAssertEqual(subEquationLog?.keys.text, "10")
+        XCTAssertEqual(subEquationLog?.answer, 10)
+        // equation
+        try calculator.calculate()
+        XCTAssertEqual(calculator.mode, .default)
+        let equationLog = calculator.logHistory.logs.last
+        XCTAssertEqual(equationLog?.keys.text, "(1+a)xa÷2")
+        XCTAssertEqual(equationLog?.answer, 55)
+    }
 }

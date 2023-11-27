@@ -17,6 +17,8 @@ class ScientificCalculator: Calculator {
     private(set) var controlPanel: CalculatorControlPanel = ScientificCalculatorControlPanel()
     private(set) var programExecutor: CalculatorProgramExecutor = ScientificCalculatorProgramExecutor()
 
+    private(set) var logHistory: CalculatorLogHistory = ScientificCalculatorLogHistory()
+
     var text: String {
         return displayScreen.text
     }
@@ -58,6 +60,7 @@ class ScientificCalculator: Calculator {
         case .program:
             let answer = try controlPanel.calculate(for: storage.keys, with: storage.values)
             storage.values[programExecutor.equation.variable] = answer
+            logHistory.append(ScientificCalculatorLog(keys: storage.keys.copy() as! CalculatorKeyList, answer: answer))
             if programExecutor.hasNextEquation() {
                 setKeys(programExecutor.nextEquation().keys)
             } else {
@@ -66,6 +69,7 @@ class ScientificCalculator: Calculator {
         default:
             let answer = try controlPanel.calculate(for: storage.keys, with: storage.values)
             displayScreen.answer = answer
+            logHistory.append(ScientificCalculatorLog(keys: storage.keys.copy() as! CalculatorKeyList, answer: answer))
         }
     }
 
@@ -77,6 +81,7 @@ class ScientificCalculator: Calculator {
             let answer = try controlPanel.calculate(for: storage.keys, with: storage.values)
             storage.values[variable] = answer  // save to variable
             displayScreen.answer = answer
+            logHistory.append(ScientificCalculatorLog(keys: storage.keys.copy() as! CalculatorKeyList, answer: answer))
         }
     }
 
