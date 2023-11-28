@@ -5,11 +5,11 @@
 //  Created by Jacky Lam on 2023-11-27.
 //
 
-class ScientificCalculatorLog: CalculatorLog {
-    var keys: CalculatorKeyList
-    var answer: Double
+public class ScientificCalculatorLog: CalculatorLog {
+    public var keys: CalculatorKeyList
+    public var answer: Double
 
-    required init(keys: CalculatorKeyList, answer: Double) {
+    public init(keys: CalculatorKeyList, answer: Double) {
         self.keys = keys
         self.answer = answer
     }

@@ -6,6 +6,8 @@
 //
 
 public class ScientificCalculator: Calculator {
+    public init() {}
+
     private(set) public var mode: CalculatorMode = .default {
         didSet {
             clearAll()
@@ -19,6 +21,10 @@ public class ScientificCalculator: Calculator {
 
     private(set) public var logHistory: CalculatorLogHistory = ScientificCalculatorLogHistory()
 
+    public var logs: [CalculatorLog] {
+        return logHistory.logs
+    }
+    
     public var text: String {
         return displayScreen.text
     }
