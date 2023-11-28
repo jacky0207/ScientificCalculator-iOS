@@ -5,33 +5,33 @@
 //  Created by Jacky Lam on 2023-11-19.
 //
 
-class ScientificCalculator: Calculator {
-    private(set) var mode: CalculatorMode = .default {
+public class ScientificCalculator: Calculator {
+    private(set) public var mode: CalculatorMode = .default {
         didSet {
             clearAll()
         }
     }
 
-    private(set) var storage: CalculatorStorage = ScientificCalculatorStorage()
-    private(set) var displayScreen: CalculatorDisplayScreen = ScientificCalculatorDisplayScreen()
-    private(set) var controlPanel: CalculatorControlPanel = ScientificCalculatorControlPanel()
-    private(set) var programExecutor: CalculatorProgramExecutor = ScientificCalculatorProgramExecutor()
+    private(set) public var storage: CalculatorStorage = ScientificCalculatorStorage()
+    private(set) public var displayScreen: CalculatorDisplayScreen = ScientificCalculatorDisplayScreen()
+    private(set) public var controlPanel: CalculatorControlPanel = ScientificCalculatorControlPanel()
+    private(set) public var programExecutor: CalculatorProgramExecutor = ScientificCalculatorProgramExecutor()
 
-    private(set) var logHistory: CalculatorLogHistory = ScientificCalculatorLogHistory()
+    private(set) public var logHistory: CalculatorLogHistory = ScientificCalculatorLogHistory()
 
-    var text: String {
+    public var text: String {
         return displayScreen.text
     }
-    var answer: Double {
+    public var answer: Double {
         return displayScreen.answer
     }
 
-    func appendKey(_ key: CalculatorKey) {
+    public func appendKey(_ key: CalculatorKey) {
         controlPanel.appendKey(key, to: storage.keys)
         displayScreen.text = storage.keys.text
     }
 
-    func setKeys(_ keys: CalculatorKeyList) {
+    public func setKeys(_ keys: CalculatorKeyList) {
         clearAll()
         var node = keys.head
         outer: while true {
@@ -44,18 +44,18 @@ class ScientificCalculator: Calculator {
         displayScreen.text = storage.keys.text
     }
 
-    func delete() {
+    public func delete() {
         controlPanel.delete(for: storage.keys)
         displayScreen.text = storage.keys.text
     }
 
-    func clearAll() {
+    public func clearAll() {
         controlPanel.clearAll(for: storage.keys)
         displayScreen.text = storage.keys.text
         displayScreen.answer = 0
     }
 
-    func calculate() throws {
+    public func calculate() throws {
         switch mode {
         case .program:
             let answer = try controlPanel.calculate(for: storage.keys, with: storage.values)
@@ -73,7 +73,7 @@ class ScientificCalculator: Calculator {
         }
     }
 
-    func calculate(to variable: CalculatorVariable) throws {
+    public func calculate(to variable: CalculatorVariable) throws {
         switch mode {
         case .program:
             break  // not allow saving variable in program mode
@@ -85,7 +85,7 @@ class ScientificCalculator: Calculator {
         }
     }
 
-    func execute(for program: CalculatorProgram) {
+    public func execute(for program: CalculatorProgram) {
         if program.equations.isEmpty {
             return
         }

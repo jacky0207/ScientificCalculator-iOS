@@ -17,7 +17,7 @@ class CalculatorKeyNode {
     }
 }
 
-class CalculatorKeyList {
+public class CalculatorKeyList {
     private let entry: CalculatorKeyNode = CalculatorKeyNode(key: .number(.zero))
     private(set) var tail: CalculatorKeyNode?
 
@@ -102,7 +102,7 @@ class CalculatorKeyList {
 
 // MARK: - NSCopying
 extension CalculatorKeyList: NSCopying {
-    func copy(with zone: NSZone? = nil) -> Any {
+    public func copy(with zone: NSZone? = nil) -> Any {
         let copy = CalculatorKeyList()
         var node = self.head
         outer: while true {

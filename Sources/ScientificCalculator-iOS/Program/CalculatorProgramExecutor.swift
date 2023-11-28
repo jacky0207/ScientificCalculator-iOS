@@ -5,7 +5,7 @@
 //  Created by Jacky Lam on 2023-11-26.
 //
 
-protocol CalculatorProgramExecutor {
+public protocol CalculatorProgramExecutor {
     var equations: [CalculatorProgramEquation] { get }
     var equation: CalculatorProgramEquation { get }
     func setEquations(for program: CalculatorProgram)

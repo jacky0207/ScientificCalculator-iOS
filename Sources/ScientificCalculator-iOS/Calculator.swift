@@ -5,7 +5,7 @@
 //  Created by Jacky Lam on 2023-11-17.
 //
 
-protocol Calculator {
+public protocol Calculator {
     // mode
     var mode: CalculatorMode { get }
     // components

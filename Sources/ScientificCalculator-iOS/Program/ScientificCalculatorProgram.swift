@@ -5,10 +5,10 @@
 //  Created by Jacky Lam on 2023-11-26.
 //
 
-class ScientificCalculatorProgram: CalculatorProgram {
-    var name: String
-    var equations: [CalculatorProgramEquation]
-    var subEquations: [CalculatorProgramSubEquation]
+public class ScientificCalculatorProgram: CalculatorProgram {
+    public var name: String
+    public var equations: [CalculatorProgramEquation]
+    public var subEquations: [CalculatorProgramSubEquation]
 
     init(
         name: String,
