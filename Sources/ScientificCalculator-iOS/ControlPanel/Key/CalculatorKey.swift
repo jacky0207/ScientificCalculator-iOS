@@ -5,7 +5,7 @@
 //  Created by Jacky Lam on 2023-11-17.
 //
 
-enum CalculatorKey: Equatable, Hashable {
+public enum CalculatorKey: Equatable, Hashable {
     case number(_ number: CalculatorNumber)
     case `operator`(_ operator: CalculatorOperator)
     case function(_ function: CalculatorFunction)
@@ -30,7 +30,7 @@ extension CalculatorKey {
     }
 }
 
-enum CalculatorNumber: String, CaseIterable {
+public enum CalculatorNumber: String, CaseIterable {
     case zero = "0"
     case one = "1"
     case two = "2"
@@ -44,14 +44,14 @@ enum CalculatorNumber: String, CaseIterable {
     case dot = "."
 }
 
-enum CalculatorOperator: String, CaseIterable {
+public enum CalculatorOperator: String, CaseIterable {
     case plus = "+"
     case minus = "-"
     case multiply = "x"
     case divide = "÷"
 }
 
-enum CalculatorFunction: String, CaseIterable {
+public enum CalculatorFunction: String, CaseIterable {
     case factorial = "!"
     case power = "^"
     case inverseFraction = "\u{207B}\u{00B9}"
@@ -72,7 +72,7 @@ enum CalculatorFunction: String, CaseIterable {
     case inverseTan = "tan\u{207B}\u{00B9}"
 }
 
-enum CalculatorVariable: String, CaseIterable {
+public enum CalculatorVariable: String, CaseIterable {
     case a = "a"
     case b = "b"
     case c = "c"
@@ -81,7 +81,7 @@ enum CalculatorVariable: String, CaseIterable {
     case y = "y"
 }
 
-enum CalculatorBracket: String, CaseIterable {
+public enum CalculatorBracket: String, CaseIterable {
     case openBracket = "("
     case closeBracket = ")"
 }

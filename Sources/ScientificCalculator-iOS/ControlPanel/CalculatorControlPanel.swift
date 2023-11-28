@@ -5,7 +5,7 @@
 //  Created by Jacky Lam on 2023-11-19.
 //
 
-protocol CalculatorControlPanel {
+public protocol CalculatorControlPanel {
     func appendKey(_ key: CalculatorKey, to keys: CalculatorKeyList)
     func delete(for keys: CalculatorKeyList)
     func clearAll(for keys: CalculatorKeyList)

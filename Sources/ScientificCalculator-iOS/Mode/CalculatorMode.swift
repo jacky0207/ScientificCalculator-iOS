@@ -5,7 +5,7 @@
 //  Created by Jacky Lam on 2023-11-26.
 //
 
-enum CalculatorMode {
+public enum CalculatorMode {
     case `default`
     case program
 }

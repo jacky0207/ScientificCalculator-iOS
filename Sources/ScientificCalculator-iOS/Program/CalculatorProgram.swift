@@ -5,18 +5,18 @@
 //  Created by Jacky Lam on 2023-11-25.
 //
 
-protocol CalculatorProgram {
+public protocol CalculatorProgram {
     var name: String { get set }
     var equations: [CalculatorProgramEquation] { get set }
     var subEquations: [CalculatorProgramSubEquation] { get set }
 }
 
-protocol CalculatorProgramEquation {
+public protocol CalculatorProgramEquation {
     var variable: CalculatorVariable { get set }
     var keys: CalculatorKeyList { get set }
 }
 
-enum CalculatorProgramEquationType {
+public enum CalculatorProgramEquationType {
     case input
     case fixed(_ equation: CalculatorKeyList)
 
@@ -30,7 +30,7 @@ enum CalculatorProgramEquationType {
     }
 }
 
-protocol CalculatorProgramSubEquation {
+public protocol CalculatorProgramSubEquation {
     var variable: CalculatorVariable { get set }
     var type: CalculatorProgramEquationType { get set }
 }
