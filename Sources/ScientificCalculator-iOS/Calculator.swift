@@ -15,6 +15,7 @@ public protocol Calculator {
     var programExecutor: CalculatorProgramExecutor { get }
     // additional components
     var logHistory: CalculatorLogHistory { get }
+    var logs: [CalculatorLog] { get }
     // accessible property
     var text: String { get }
     var answer: Double { get }

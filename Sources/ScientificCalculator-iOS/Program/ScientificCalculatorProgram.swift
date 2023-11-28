@@ -10,7 +10,7 @@ public class ScientificCalculatorProgram: CalculatorProgram {
     public var equations: [CalculatorProgramEquation]
     public var subEquations: [CalculatorProgramSubEquation]
 
-    init(
+    public init(
         name: String,
         equations: [CalculatorProgramEquation],
         subEquations: [CalculatorProgramSubEquation]
@@ -22,7 +22,7 @@ public class ScientificCalculatorProgram: CalculatorProgram {
 }
 
 extension ScientificCalculatorProgram {
-    static var none: ScientificCalculatorProgram {
+    public static var none: ScientificCalculatorProgram {
         return ScientificCalculatorProgram(
             name: "",
             equations: [],
@@ -31,18 +31,18 @@ extension ScientificCalculatorProgram {
     }
 }
 
-class ScientificCalculatorProgramEquation: CalculatorProgramEquation {
-    var variable: CalculatorVariable
-    var keys: CalculatorKeyList
+public class ScientificCalculatorProgramEquation: CalculatorProgramEquation {
+    public var variable: CalculatorVariable
+    public var keys: CalculatorKeyList
 
-    init(variable: CalculatorVariable, keys: CalculatorKeyList) {
+    public init(variable: CalculatorVariable, keys: CalculatorKeyList) {
         self.variable = variable
         self.keys = keys
     }
 }
 
 extension ScientificCalculatorProgramEquation {
-    static var none: ScientificCalculatorProgramEquation {
+    public static var none: ScientificCalculatorProgramEquation {
         return ScientificCalculatorProgramEquation(
             variable: .a,
             keys: CalculatorKeyList()
@@ -50,11 +50,11 @@ extension ScientificCalculatorProgramEquation {
     }
 }
 
-class ScientificCalculatorProgramSubEquation: CalculatorProgramSubEquation {
-    var variable: CalculatorVariable
-    var type: CalculatorProgramEquationType
+public class ScientificCalculatorProgramSubEquation: CalculatorProgramSubEquation {
+    public var variable: CalculatorVariable
+    public var type: CalculatorProgramEquationType
 
-    init(variable: CalculatorVariable, type: CalculatorProgramEquationType) {
+    public init(variable: CalculatorVariable, type: CalculatorProgramEquationType) {
         self.variable = variable
         self.type = type
     }
