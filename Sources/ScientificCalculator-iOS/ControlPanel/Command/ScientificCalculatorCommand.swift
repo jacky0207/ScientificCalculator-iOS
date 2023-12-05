@@ -12,7 +12,7 @@ open class ScientificCalculatorCommand: CalculatorCommand {
         let tail = try nextNumberTail(of: node)
         let right = try nextNumber(after: node, to: tail)
         let answer = try answer(left: left, right: right)
-        let newKeys = CalculatorKeyConverter().convertKeys(from: answer)
+        let newKeys = try CalculatorKeyConverter().convertKeys(from: answer)
         return CalculatorCommandResult(
             head: head,
             tail: tail,

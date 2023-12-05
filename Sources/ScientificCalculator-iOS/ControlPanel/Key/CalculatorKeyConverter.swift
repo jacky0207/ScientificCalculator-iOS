@@ -11,6 +11,7 @@ enum CalculatorKeyConverterError: Error {
     case tailNotReach
     case incorrectKeyType
     case invalidNumber
+    case mathError
 }
 
 extension CalculatorKeyConverterError: LocalizedError {
@@ -22,6 +23,8 @@ extension CalculatorKeyConverterError: LocalizedError {
             return "Node should be number within head and tail"
         case .invalidNumber:
             return "Invalid number nodes"
+        case .mathError:
+            return "Math Error"
         }
     }
 }
@@ -83,7 +86,7 @@ class CalculatorKeyConverter {
         return try convertNumber(from: head, to: tail)
     }
 
-    func convertKeys(from number: Double) -> CalculatorKeyList {
+    func convertKeys(from number: Double) throws -> CalculatorKeyList {
         let keys = CalculatorKeyList()
         let string = number.truncatingRemainder(dividingBy: 1) == 0 ? String(format: "%.0f", number) : String(number)
         for char in string {
@@ -91,7 +94,10 @@ class CalculatorKeyConverter {
                 keys.append(.operator(.minus))
                 continue
             }
-            keys.append(CalculatorKey.number(CalculatorNumber(rawValue: "\(char)")!))
+            guard let number = CalculatorNumber(rawValue: "\(char)") else {
+                throw CalculatorKeyConverterError.mathError
+            }
+            keys.append(CalculatorKey.number(number))
         }
         return keys
     }

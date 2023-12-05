@@ -123,12 +123,18 @@ final class ScientificCalculatorKeyConverterTests: XCTestCase {
     }
 
     func testScientificCalculatorKeyConverter_ConvertKeys() throws {
-        XCTAssertEqual(converter.convertKeys(from: 0).text, "0")
-        XCTAssertEqual(converter.convertKeys(from: 1.0).text, "1")
-        XCTAssertEqual(converter.convertKeys(from: 1.2).text, "1.2")
+        XCTAssertEqual(try converter.convertKeys(from: 0).text, "0")
+        XCTAssertEqual(try converter.convertKeys(from: 1.0).text, "1")
+        XCTAssertEqual(try converter.convertKeys(from: 1.2).text, "1.2")
     }
 
     func testScientificCalculatorKeyConverter_ConvertKeys_NegativeNumber() throws {
-        XCTAssertEqual(converter.convertKeys(from: -1.0).text, "-1")
+        XCTAssertEqual(try converter.convertKeys(from: -1.0).text, "-1")
+    }
+
+    func testScientificCalculatorKeyConverter_OutOfRange_ThrowMathErrorException() throws {
+        XCTAssertThrowsError(try converter.convertKeys(from: .nan).text, "-1") { error in
+            XCTAssertEqual(error as? CalculatorKeyConverterError, .mathError)
+        }
     }
 }
