@@ -5,7 +5,9 @@
 //  Created by Jacky Lam on 2023-11-19.
 //
 
-public class ScientificCalculator: Calculator {
+import Combine
+
+public class ScientificCalculator: Calculator, ObservableObject {
     public init() {}
 
     private(set) public var mode: CalculatorMode = .default {
@@ -24,7 +26,7 @@ public class ScientificCalculator: Calculator {
     public var logs: [CalculatorLog] {
         return logHistory.logs
     }
-    
+
     public var text: String {
         return displayScreen.text
     }
