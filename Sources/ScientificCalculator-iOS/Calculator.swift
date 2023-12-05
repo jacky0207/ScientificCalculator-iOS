@@ -5,7 +5,10 @@
 //  Created by Jacky Lam on 2023-11-17.
 //
 
-public protocol Calculator {
+import Combine
+
+@available(macOS 10.15, *)
+public protocol Calculator: ObservableObject {
     // mode
     var mode: CalculatorMode { get }
     // components
