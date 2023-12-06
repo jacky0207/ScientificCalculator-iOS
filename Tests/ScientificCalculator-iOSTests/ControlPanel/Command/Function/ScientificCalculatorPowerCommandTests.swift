@@ -45,14 +45,14 @@ final class ScientificCalculatorPowerCommandTests: XCTestCase {
         XCTAssertEqual(result.newKeys.text, "0.5")
     }
 
-    func testScientificCalculatorPowerCommand_InverseFractionInvalidTail_ThrowException() throws {
+    func testScientificCalculatorPowerCommand_InverseFractionNumberTail_ThrowSyntaxError() throws {
         let nodes = CalculatorKeyList()
         let `operator` = CalculatorKeyNode(key: .function(.inverseFraction))
         nodes.append(.number(.two))
         nodes.append(from: `operator`)
         nodes.append(.number(.two))
         XCTAssertThrowsError(try inverseFractionCommand.execute(node: `operator`)) { error in
-            XCTAssertEqual(error as? CalculatorCommandError, .invalidTail)
+            XCTAssertEqual(error as? CalculatorError, .syntax)
         }
     }
 
@@ -67,14 +67,14 @@ final class ScientificCalculatorPowerCommandTests: XCTestCase {
         XCTAssertEqual(result.newKeys.text, "9")
     }
 
-    func testScientificCalculatorPowerCommand_SquareInvalidTail_ThrowException() throws {
+    func testScientificCalculatorPowerCommand_SquareNumberTail_ThrowSyntaxError() throws {
         let nodes = CalculatorKeyList()
         let `operator` = CalculatorKeyNode(key: .function(.square))
         nodes.append(.number(.three))
         nodes.append(from: `operator`)
         nodes.append(.number(.three))
         XCTAssertThrowsError(try squareCommand.execute(node: `operator`)) { error in
-            XCTAssertEqual(error as? CalculatorCommandError, .invalidTail)
+            XCTAssertEqual(error as? CalculatorError, .syntax)
         }
     }
 
@@ -89,14 +89,14 @@ final class ScientificCalculatorPowerCommandTests: XCTestCase {
         XCTAssertEqual(result.newKeys.text, "27")
     }
 
-    func testScientificCalculatorPowerCommand_CubeInvalidTail_ThrowException() throws {
+    func testScientificCalculatorPowerCommand_CubeNumberTail_ThrowSyntaxError() throws {
         let nodes = CalculatorKeyList()
         let `operator` = CalculatorKeyNode(key: .function(.cube))
         nodes.append(.number(.three))
         nodes.append(from: `operator`)
         nodes.append(.number(.three))
         XCTAssertThrowsError(try cubeCommand.execute(node: `operator`)) { error in
-            XCTAssertEqual(error as? CalculatorCommandError, .invalidTail)
+            XCTAssertEqual(error as? CalculatorError, .syntax)
         }
     }
 }

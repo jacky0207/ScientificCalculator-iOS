@@ -8,7 +8,7 @@
 open class ScientificCalculatorPairCommand: CalculatorPairCommand {
     func execute(from open: CalculatorKeyNode, to close: CalculatorKeyNode, convert: (CalculatorKeyList) throws -> CalculatorKeyList) throws -> CalculatorCommandResult {
         guard let head = open.next, head !== close else {
-            throw CalculatorPairCommandError.invalidMiddle
+            throw CalculatorError.syntax
         }
         var newKeys = CalculatorKeyList(head)
         newKeys.remove(from: close)
@@ -24,7 +24,7 @@ open class ScientificCalculatorPairCommand: CalculatorPairCommand {
             newKeys.append(from: oldHead)
         }
         if let next = close.next, case .number = next.key {
-            throw CalculatorPairCommandError.invalidClose
+            throw CalculatorError.syntax
         }
         return CalculatorCommandResult(head: open, tail: close, newKeys: newKeys)
     }

@@ -44,60 +44,60 @@ final class ScientificCalculatorKeyConverterTests: XCTestCase {
         XCTAssertEqual(try converter.convertNumber(for: keys), 0)
     }
 
-    func testScientificCalculatorKeyConverter_TailNotReach_throwException() throws {
+    func testScientificCalculatorKeyConverter_TailNotReach_ThrowSyntaxError() throws {
         let keys = CalculatorKeyList()
         keys.append(.number(.one))
         keys.append(.number(.two))
         keys.append(.number(.three))
         XCTAssertThrowsError(try converter.convertNumber(from: keys.head!, to: CalculatorKeyNode(key: .number(.one)))) { error in
-            XCTAssertEqual(error as? CalculatorKeyConverterError, CalculatorKeyConverterError.tailNotReach)
+            XCTAssertEqual(error as? CalculatorError, .syntax)
         }
     }
 
-    func testScientificCalculatorKeyConverter_PlusMinusOnly_IncorrectKeyType() throws {
+    func testScientificCalculatorKeyConverter_PlusMinusOnly_ThrowSyntaxError() throws {
         let keys = CalculatorKeyList()
         keys.append(.operator(.plus))
         XCTAssertThrowsError(try converter.convertNumber(from: keys.head!, to: keys.tail!)) { error in
-            XCTAssertEqual(error as? CalculatorKeyConverterError, CalculatorKeyConverterError.incorrectKeyType)
+            XCTAssertEqual(error as? CalculatorError, .syntax)
         }
     }
 
-    func testScientificCalculatorKeyConverter_PlusMinusMiddle_IncorrectKeyType() throws {
+    func testScientificCalculatorKeyConverter_PlusMinusMiddle_ThrowSyntaxError() throws {
         let keys = CalculatorKeyList()
         keys.append(.number(.one))
         keys.append(.number(.two))
         keys.append(.operator(.plus))
         keys.append(.number(.three))
         XCTAssertThrowsError(try converter.convertNumber(from: keys.head!, to: keys.tail!)) { error in
-            XCTAssertEqual(error as? CalculatorKeyConverterError, CalculatorKeyConverterError.incorrectKeyType)
+            XCTAssertEqual(error as? CalculatorError, .syntax)
         }
     }
 
-    func testScientificCalculatorKeyConverter_ContainsMultiplyDivide_IncorrectKeyType() throws {
+    func testScientificCalculatorKeyConverter_ContainsMultiplyDivide_ThrowSyntaxError() throws {
         let keys = CalculatorKeyList()
         keys.append(.operator(.multiply))
         XCTAssertThrowsError(try converter.convertNumber(from: keys.head!, to: keys.tail!)) { error in
-            XCTAssertEqual(error as? CalculatorKeyConverterError, CalculatorKeyConverterError.incorrectKeyType)
+            XCTAssertEqual(error as? CalculatorError, .syntax)
         }
     }
 
-    func testScientificCalculatorKeyConverter_ContainsFunction_IncorrectKeyType() throws {
+    func testScientificCalculatorKeyConverter_ContainsFunction_ThrowSyntaxError() throws {
         let keys = CalculatorKeyList()
         keys.append(.bracket(.openBracket))
         XCTAssertThrowsError(try converter.convertNumber(from: keys.head!, to: keys.tail!)) { error in
-            XCTAssertEqual(error as? CalculatorKeyConverterError, CalculatorKeyConverterError.incorrectKeyType)
+            XCTAssertEqual(error as? CalculatorError, .syntax)
         }
     }
 
-    func testScientificCalculatorKeyConverter_ContainsVariable_IncorrectKeyType() throws {
+    func testScientificCalculatorKeyConverter_ContainsVariable_ThrowSyntaxError() throws {
         let keys = CalculatorKeyList()
         keys.append(.variable(.a))
         XCTAssertThrowsError(try converter.convertNumber(from: keys.head!, to: keys.tail!)) { error in
-            XCTAssertEqual(error as? CalculatorKeyConverterError, CalculatorKeyConverterError.incorrectKeyType)
+            XCTAssertEqual(error as? CalculatorError, .syntax)
         }
     }
 
-    func testScientificCalculatorKeyConverter_InvalidNumber_ThrowException() throws {
+    func testScientificCalculatorKeyConverter_InvalidNumber_ThrowSyntaxError() throws {
         let keys = CalculatorKeyList()
         keys.append(.number(.one))
         keys.append(.number(.two))
@@ -105,7 +105,7 @@ final class ScientificCalculatorKeyConverterTests: XCTestCase {
         keys.append(.number(.dot))
         keys.append(.number(.dot))
         XCTAssertThrowsError(try converter.convertNumber(from: keys.head!, to: keys.tail!)) { error in
-            XCTAssertEqual(error as? CalculatorKeyConverterError, CalculatorKeyConverterError.invalidNumber)
+            XCTAssertEqual(error as? CalculatorError, .syntax)
         }
     }
 
@@ -132,9 +132,9 @@ final class ScientificCalculatorKeyConverterTests: XCTestCase {
         XCTAssertEqual(try converter.convertKeys(from: -1.0).text, "-1")
     }
 
-    func testScientificCalculatorKeyConverter_OutOfRange_ThrowMathErrorException() throws {
+    func testScientificCalculatorKeyConverter_OutOfRange_ThrowMathError() throws {
         XCTAssertThrowsError(try converter.convertKeys(from: .nan).text, "-1") { error in
-            XCTAssertEqual(error as? CalculatorKeyConverterError, .mathError)
+            XCTAssertEqual(error as? CalculatorError, .math)
         }
     }
 }

@@ -7,35 +7,13 @@
 
 import Foundation
 
-enum CalculatorKeyConverterError: Error {
-    case tailNotReach
-    case incorrectKeyType
-    case invalidNumber
-    case mathError
-}
-
-extension CalculatorKeyConverterError: LocalizedError {
-    var errorDescription: String? {
-        switch self {
-        case .tailNotReach:
-            return "Head should be ended with tail"
-        case .incorrectKeyType:
-            return "Node should be number within head and tail"
-        case .invalidNumber:
-            return "Invalid number nodes"
-        case .mathError:
-            return "Math Error"
-        }
-    }
-}
-
 class CalculatorKeyConverter {
     func convertNumber(from head: CalculatorKeyNode, to tail: CalculatorKeyNode) throws -> Double {
         var string = ""
         var node: CalculatorKeyNode? = head
         while true {
             guard let curr = node else {
-                throw CalculatorKeyConverterError.tailNotReach
+                throw CalculatorError.syntax
             }
             switch curr.key {
             case .number(let number):
@@ -45,10 +23,10 @@ class CalculatorKeyConverter {
                 switch `operator` {
                 case .plus, .minus:
                     if curr === head && curr.next == nil {  // +/- only
-                        throw CalculatorKeyConverterError.incorrectKeyType
+                        throw CalculatorError.syntax
                     }
                     if let prev = curr.prev, case .number = prev.key {  // 123+45
-                        throw CalculatorKeyConverterError.incorrectKeyType
+                        throw CalculatorError.syntax
                     }
                     if `operator` == .minus {  // add/remove "-"
                         if string.isEmpty {
@@ -59,14 +37,14 @@ class CalculatorKeyConverter {
                     }
                     node = curr.next
                 case .multiply, .divide:
-                    throw CalculatorKeyConverterError.incorrectKeyType
+                    throw CalculatorError.syntax
                 }
             case .function:
-                throw CalculatorKeyConverterError.incorrectKeyType
+                throw CalculatorError.syntax
             case .variable:
-                throw CalculatorKeyConverterError.incorrectKeyType
+                throw CalculatorError.syntax
             case .bracket:
-                throw CalculatorKeyConverterError.incorrectKeyType
+                throw CalculatorError.syntax
             }
 
             if curr === tail {
@@ -74,7 +52,7 @@ class CalculatorKeyConverter {
             }
         }
         guard let number = Double(string) else {  // 123..45
-            throw CalculatorKeyConverterError.invalidNumber
+            throw CalculatorError.syntax
         }
         return number
     }
@@ -95,7 +73,7 @@ class CalculatorKeyConverter {
                 continue
             }
             guard let number = CalculatorNumber(rawValue: "\(char)") else {
-                throw CalculatorKeyConverterError.mathError
+                throw CalculatorError.math
             }
             keys.append(CalculatorKey.number(number))
         }

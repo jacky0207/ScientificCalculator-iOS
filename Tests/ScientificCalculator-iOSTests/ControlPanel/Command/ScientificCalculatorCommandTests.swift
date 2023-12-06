@@ -62,7 +62,7 @@ final class ScientificCalculatorCommandTests: XCTestCase {
         XCTAssertEqual(result.newKeys.text, "3")
     }
 
-    func testScientificCalculatorCommand_CompulsoryHeadNotExist_ThrowException() throws {
+    func testScientificCalculatorCommand_CompulsoryHeadNotExist_ThrowSyntaxError() throws {
         let command = ScientificCalculatorTestCommand(
             type: .exist
         )
@@ -71,11 +71,11 @@ final class ScientificCalculatorCommandTests: XCTestCase {
         nodes.append(from: `operator`)
         nodes.append(.number(.two))
         XCTAssertThrowsError(try command.execute(node: `operator`)) { error in
-            XCTAssertEqual(error as? CalculatorCommandError, CalculatorCommandError.invalidHead)
+            XCTAssertEqual(error as? CalculatorError, .syntax)
         }
     }
 
-    func testScientificCalculatorCommand_CompulsoryTailNotExist_ThrowException() throws {
+    func testScientificCalculatorCommand_CompulsoryTailNotExist_ThrowSyntaxError() throws {
         let command = ScientificCalculatorTestCommand(
             type: .exist
         )
@@ -84,7 +84,7 @@ final class ScientificCalculatorCommandTests: XCTestCase {
         nodes.append(.number(.two))
         nodes.append(from: `operator`)
         XCTAssertThrowsError(try command.execute(node: `operator`)) { error in
-            XCTAssertEqual(error as? CalculatorCommandError, CalculatorCommandError.invalidTail)
+            XCTAssertEqual(error as? CalculatorError, .syntax)
         }
     }
 
@@ -116,7 +116,7 @@ final class ScientificCalculatorCommandTests: XCTestCase {
         XCTAssertEqual(result.newKeys.text, "3")
     }
 
-    func testScientificCalculatorCommand_NotExistHeadExist_ThrowException() throws {
+    func testScientificCalculatorCommand_NotExistHeadExist_ThrowSyntaxError() throws {
         let command = ScientificCalculatorTestCommand(
             type: .notExist
         )
@@ -125,11 +125,11 @@ final class ScientificCalculatorCommandTests: XCTestCase {
         nodes.append(.number(.two))
         nodes.append(from: `operator`)
         XCTAssertThrowsError(try command.execute(node: `operator`)) { error in
-            XCTAssertEqual(error as? CalculatorCommandError, CalculatorCommandError.invalidHead)
+            XCTAssertEqual(error as? CalculatorError, .syntax)
         }
     }
 
-    func testScientificCalculatorCommand_NotExistTailExist_ThrowException() throws {
+    func testScientificCalculatorCommand_NotExistTailExist_ThrowSyntaxError() throws {
         let command = ScientificCalculatorTestCommand(
             type: .notExist
         )
@@ -138,7 +138,7 @@ final class ScientificCalculatorCommandTests: XCTestCase {
         nodes.append(from: `operator`)
         nodes.append(.number(.two))
         XCTAssertThrowsError(try command.execute(node: `operator`)) { error in
-            XCTAssertEqual(error as? CalculatorCommandError, CalculatorCommandError.invalidTail)
+            XCTAssertEqual(error as? CalculatorError, .syntax)
         }
     }
 

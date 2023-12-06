@@ -44,13 +44,13 @@ final class ScientificCalculatorVariableCommandTests: XCTestCase {
         XCTAssertEqual(result.newKeys.text, "6")
     }
 
-    func testScientificCalculatorVariableCommand_WithNumberTail_ThrowException() throws {
+    func testScientificCalculatorVariableCommand_WithNumberTail_ThrowSyntaxError() throws {
         let nodes = CalculatorKeyList()
         let node = CalculatorKeyNode(key: .variable(.a))
         nodes.append(from: node)
         nodes.append(.number(.two))
         XCTAssertThrowsError(try command.execute(node: node, value: 3.0)) { error in
-            XCTAssertEqual(error as? CalculatorCommandError, .invalidTail)
+            XCTAssertEqual(error as? CalculatorError, .syntax)
         }
     }
 }

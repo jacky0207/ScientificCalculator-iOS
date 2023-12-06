@@ -58,7 +58,7 @@ final class ScientificCalculatorPairCommandTests: XCTestCase {
         XCTAssertEqual(result.newKeys.text, "x3")
     }
 
-    func testScientificCalculatorPairCommand_Invalid_ThrowException() throws {
+    func testScientificCalculatorPairCommand_Invalid_ThrowSyntaxError() throws {
         let command = ScientificCalculatorTestPairCommand()
         let nodes = CalculatorKeyList()
         let open = CalculatorKeyNode(key: .bracket(.openBracket))
@@ -66,11 +66,11 @@ final class ScientificCalculatorPairCommandTests: XCTestCase {
         nodes.append(from: open)
         nodes.append(from: close)
         XCTAssertThrowsError(try command.execute(from: open, to: close, convert: { $0 })) { error in
-            XCTAssertEqual(error as? CalculatorPairCommandError, .invalidMiddle)
+            XCTAssertEqual(error as? CalculatorError, .syntax)
         }
     }
 
-    func testScientificCalculatorPairCommand_WithNumberTail_ThrowException() throws {
+    func testScientificCalculatorPairCommand_WithNumberTail_ThrowSyntaxError() throws {
         let command = ScientificCalculatorTestPairCommand()
         let nodes = CalculatorKeyList()
         let open = CalculatorKeyNode(key: .bracket(.openBracket))
@@ -82,7 +82,7 @@ final class ScientificCalculatorPairCommandTests: XCTestCase {
         nodes.append(from: close)
         nodes.append(.number(.two))
         XCTAssertThrowsError(try command.execute(from: open, to: close, convert: { $0 })) { error in
-            XCTAssertEqual(error as? CalculatorPairCommandError, .invalidClose)
+            XCTAssertEqual(error as? CalculatorError, .syntax)
         }
     }
 }

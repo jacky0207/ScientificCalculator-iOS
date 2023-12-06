@@ -30,18 +30,18 @@ final class ScientificCalculatorFactorialCommandTests: XCTestCase {
         XCTAssertEqual(result.newKeys.text, "24")
     }
 
-    func testScientificCalculatorFactorialCommand_NumberTail_InvalidTail() throws {
+    func testScientificCalculatorFactorialCommand_NumberTail_ThrowSyntaxError() throws {
         let nodes = CalculatorKeyList()
         let `operator` = CalculatorKeyNode(key: .function(.factorial))
         nodes.append(.number(.four))
         nodes.append(from: `operator`)
         nodes.append(.number(.one))
         XCTAssertThrowsError( try factorialCommand.execute(node: `operator`)) { error in
-            XCTAssertEqual(error as? CalculatorCommandError, CalculatorCommandError.invalidTail)
+            XCTAssertEqual(error as? CalculatorError, .syntax)
         }
     }
 
-    func testScientificCalculatorFactorialCommand_NotIntegerHead_InvalidHead() throws {
+    func testScientificCalculatorFactorialCommand_NotIntegerHead_ThrowSyntaxError() throws {
         let nodes = CalculatorKeyList()
         let `operator` = CalculatorKeyNode(key: .function(.factorial))
         nodes.append(.number(.four))
@@ -49,7 +49,7 @@ final class ScientificCalculatorFactorialCommandTests: XCTestCase {
         nodes.append(.number(.one))
         nodes.append(from: `operator`)
         XCTAssertThrowsError( try factorialCommand.execute(node: `operator`)) { error in
-            XCTAssertEqual(error as? CalculatorCommandError, CalculatorCommandError.invalidHead)
+            XCTAssertEqual(error as? CalculatorError, .math)
         }
     }
 

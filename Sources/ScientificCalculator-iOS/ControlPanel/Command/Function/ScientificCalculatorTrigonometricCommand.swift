@@ -34,7 +34,7 @@ class ScientificCalculatorTanCommand: ScientificCalculatorCommand {
 
     override func answer(left: Double, right: Double) throws -> Double {
         if right.truncatingRemainder(dividingBy: 180) == 90 {
-            throw CalculatorCommandError.invalidTail
+            throw CalculatorError.math
         }
         return left * __tanpi(right / 180)
     }
