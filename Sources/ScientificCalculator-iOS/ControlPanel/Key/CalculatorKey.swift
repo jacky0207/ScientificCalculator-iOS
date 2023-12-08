@@ -62,7 +62,7 @@ public enum CalculatorFunction: String, CaseIterable {
     case cubeRoot = "\u{221B}"
     case log = "log"
     case naturalLog = "ln"
-    case powerOfTen = "\u{2081}\u{2080}"
+    case powerOfTen = "\u{0131}\u{006F}"
     case exponential = "e"
     case sin = "sin"
     case cos = "cos"

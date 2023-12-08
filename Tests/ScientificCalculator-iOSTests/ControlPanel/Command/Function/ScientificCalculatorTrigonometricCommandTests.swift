@@ -57,7 +57,7 @@ final class ScientificCalculatorTrigonometricCommandTests: XCTestCase {
         XCTAssertEqual(result.newKeys.text, "1")
     }
 
-    func testScientificCalculatorTrigonometricCommand_TanInvalidTail_ThrowException() throws {
+    func testScientificCalculatorTrigonometricCommand_TanInvalidTail_ThrowMathError() throws {
         let nodes = CalculatorKeyList()
         let `operator` = CalculatorKeyNode(key: .function(.tan))
         nodes.append(from: `operator`)
@@ -65,7 +65,7 @@ final class ScientificCalculatorTrigonometricCommandTests: XCTestCase {
         nodes.append(.number(.seven))
         nodes.append(.number(.zero))
         XCTAssertThrowsError(try tanCommand.execute(node: `operator`)) { error in
-            XCTAssertEqual(error as? CalculatorCommandError, .invalidTail)
+            XCTAssertEqual(error as? CalculatorError, .math)
         }
     }
 }

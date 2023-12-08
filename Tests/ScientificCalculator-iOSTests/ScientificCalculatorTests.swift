@@ -9,7 +9,7 @@ import XCTest
 @testable import ScientificCalculator_iOS
 
 final class ScientificCalculatorTests: XCTestCase {
-    let calculator: Calculator = ScientificCalculator()
+    let calculator: any Calculator = ScientificCalculator()
 
     override func setUpWithError() throws {
         

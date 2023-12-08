@@ -66,7 +66,7 @@ extension CalculatorCalculation {
                 node = curr.next
             } else if case .bracket(let bracket) = curr.key, keyPair.close == bracket {
                 guard let openBracket = openBracketStack.popLast() else {
-                    throw CalculatorPairCommandError.invalidClose
+                    throw CalculatorError.syntax
                 }
                 let command = ScientificCalculatorCommandFactory.shared.bracketPairCommandInstance(of: bracket)
                 let result = try command.execute(from: openBracket, to: curr) { keys in
@@ -79,7 +79,7 @@ extension CalculatorCalculation {
             }
         }
         if !openBracketStack.isEmpty {
-            throw CalculatorPairCommandError.invalidOpen
+            throw CalculatorError.syntax
         }
         return pressedKeys
     }

@@ -18,20 +18,20 @@ class ScientificCalculatorVariableCommand: ScientificCalculatorCommand, Calculat
 
     func execute(node: CalculatorKeyNode, value: Double) throws -> CalculatorCommandResult {
         if let next = node.next, case .number = next.key {
-            throw CalculatorCommandError.invalidTail
+            throw CalculatorError.syntax
         }
         if let prev = node.prev, case .number = prev.key {  // hidden multiply has higher priority than function
             let head = try previousNumberHead(of: node)
             let left = try previousNumber(from: head, before: node)
             let answer = left * value
-            let newKeys = CalculatorKeyConverter().convertKeys(from: answer)
+            let newKeys = try CalculatorKeyConverter().convertKeys(from: answer)
             return CalculatorCommandResult(
                 head: head,
                 tail: node,
                 newKeys: newKeys
             )
         } else {
-            let newKeys = CalculatorKeyConverter().convertKeys(from: value)
+            let newKeys = try CalculatorKeyConverter().convertKeys(from: value)
             return CalculatorCommandResult(
                 head: node,
                 tail: node,

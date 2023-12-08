@@ -12,7 +12,7 @@ open class ScientificCalculatorCommand: CalculatorCommand {
         let tail = try nextNumberTail(of: node)
         let right = try nextNumber(after: node, to: tail)
         let answer = try answer(left: left, right: right)
-        let newKeys = CalculatorKeyConverter().convertKeys(from: answer)
+        let newKeys = try CalculatorKeyConverter().convertKeys(from: answer)
         return CalculatorCommandResult(
             head: head,
             tail: tail,
@@ -32,7 +32,7 @@ open class ScientificCalculatorCommand: CalculatorCommand {
         switch previousNumberType() {
         case .exist:
             guard let node = CalculatorKeyTraveler().prevNumberHead(of: node) else {
-                throw CalculatorCommandError.invalidHead
+                throw CalculatorError.syntax
             }
             return node
         case .optional:
@@ -41,7 +41,7 @@ open class ScientificCalculatorCommand: CalculatorCommand {
             guard let _ = CalculatorKeyTraveler().prevNumberHead(of: node) else {
                 return node
             }
-            throw CalculatorCommandError.invalidHead
+            throw CalculatorError.syntax
         }
     }
 
@@ -67,14 +67,14 @@ open class ScientificCalculatorCommand: CalculatorCommand {
         switch nextNumberType() {
         case .exist:
             guard let node = CalculatorKeyTraveler().nextNumberTail(of: node) else {
-                throw CalculatorCommandError.invalidTail
+                throw CalculatorError.syntax
             }
             return node
         case .optional:
             return CalculatorKeyTraveler().nextNumberTail(of: node) ?? node
         case .notExist:
             if let next = node.next, case .number = next.key {  // don't use CalculatorKeyTraveler.nextNumberTail(of:) i.e. 2^2+1, where "+" is not a sign
-                throw CalculatorCommandError.invalidTail
+                throw CalculatorError.syntax
             }
             return node
         }

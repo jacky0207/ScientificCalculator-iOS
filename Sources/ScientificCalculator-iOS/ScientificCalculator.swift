@@ -7,7 +7,9 @@
 
 import Combine
 
-public class ScientificCalculator: Calculator, ObservableObject {
+@available(macOS 10.15, *)
+@available(iOS 13.0, *)
+public class ScientificCalculator: Calculator {
     public init() {}
 
     private(set) public var mode: CalculatorMode = .default {
@@ -17,11 +19,11 @@ public class ScientificCalculator: Calculator, ObservableObject {
     }
 
     private(set) public var storage: CalculatorStorage = ScientificCalculatorStorage()
-    private(set) public var displayScreen: CalculatorDisplayScreen = ScientificCalculatorDisplayScreen()
+    @Published private(set) public var displayScreen: CalculatorDisplayScreen = ScientificCalculatorDisplayScreen()
     private(set) public var controlPanel: CalculatorControlPanel = ScientificCalculatorControlPanel()
     private(set) public var programExecutor: CalculatorProgramExecutor = ScientificCalculatorProgramExecutor()
 
-    private(set) public var logHistory: CalculatorLogHistory = ScientificCalculatorLogHistory()
+    @Published private(set) public var logHistory: CalculatorLogHistory = ScientificCalculatorLogHistory()
 
     public var logs: [CalculatorLog] {
         return logHistory.logs

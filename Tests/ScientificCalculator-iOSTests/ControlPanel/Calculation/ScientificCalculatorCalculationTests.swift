@@ -117,22 +117,22 @@ final class ScientificCalculatorCalculationTests: XCTestCase {
         XCTAssertEqual(try calculation.simplifyVariable(for: nodes, with: [:]).text, "0")
     }
 
-    func testScientificCalculatorCalculation_BracketNotClose_ThrowException() throws {
+    func testScientificCalculatorCalculation_BracketNotClose_ThrowSyntaxError() throws {
         let nodes = CalculatorKeyList()
         nodes.append(.bracket(.openBracket))
         nodes.append(.number(.one))
         nodes.append(.operator(.plus))
         nodes.append(.number(.two))
         XCTAssertThrowsError(try calculation.simplifyBracket(for: nodes, with: [:])) { error in
-            XCTAssertEqual(error as? CalculatorPairCommandError, .invalidOpen)
+            XCTAssertEqual(error as? CalculatorError, .syntax)
         }
     }
 
-    func testScientificCalculatorCalculation_BracketNotOpenBeforeClose_ThrowException() throws {
+    func testScientificCalculatorCalculation_BracketNotOpenBeforeClose_ThrowSyntaxError() throws {
         let nodes = CalculatorKeyList()
         nodes.append(.bracket(.closeBracket))
         XCTAssertThrowsError(try calculation.simplifyBracket(for: nodes, with: [:])) { error in
-            XCTAssertEqual(error as? CalculatorPairCommandError, .invalidClose)
+            XCTAssertEqual(error as? CalculatorError, .syntax)
         }
     }
 

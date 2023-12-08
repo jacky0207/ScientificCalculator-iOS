@@ -12,7 +12,7 @@ class ScientificCalculatorFactorialCommand: ScientificCalculatorCommand {
     
     override func answer(left: Double, right: Double) throws -> Double {
         if left.truncatingRemainder(dividingBy: 1) != 0 {
-            throw CalculatorCommandError.invalidHead
+            throw CalculatorError.math
         }
         if left == 0 || left == 1 {
             return 1

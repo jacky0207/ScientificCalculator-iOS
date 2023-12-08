@@ -13,22 +13,6 @@ struct CalculatorCommandResult {
     var newKeys: CalculatorKeyList
 }
 
-enum CalculatorCommandError: Error {
-    case invalidHead
-    case invalidTail
-}
-
-extension CalculatorCommandError: LocalizedError {
-    var errorDescription: String? {
-        switch self {
-        case .invalidHead:
-            return "Invalid head"
-        case .invalidTail:
-            return "Invalid tail"
-        }
-    }
-}
-
 enum CalculatorCommandType {
     static let defaultNumber: Double = 1
     case exist
