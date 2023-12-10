@@ -14,7 +14,7 @@ public enum CalculatorKey: Equatable, Hashable {
 }
 
 extension CalculatorKey {
-    var text: String {
+    public var text: String {
         switch self {
         case .number(let number):
             return number.rawValue
