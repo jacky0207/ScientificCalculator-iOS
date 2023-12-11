@@ -81,7 +81,7 @@ public class ScientificCalculator: Calculator {
             let answer = try controlPanel.calculate(for: storage.keys, with: storage.values, params: calculationParams)
             storage.values[.answer] = answer  // save to answer
             storage.values[programExecutor.equation.variable] = answer
-            logHistory.append(ScientificCalculatorLog(keys: storage.keys.copy() as! CalculatorKeyList, answer: answer))
+            logHistory.append(ScientificCalculatorLog(keys: storage.keys.copy() as! CalculatorKeyList, answer: answer, variable: programExecutor.equation.variable))
             if programExecutor.hasNextEquation() {
                 setKeys(programExecutor.nextEquation().keys)
             } else {
@@ -91,7 +91,7 @@ public class ScientificCalculator: Calculator {
             let answer = try controlPanel.calculate(for: storage.keys, with: storage.values, params: calculationParams)
             storage.values[.answer] = answer  // save to answer
             displayScreen.answer = answer
-            logHistory.append(ScientificCalculatorLog(keys: storage.keys.copy() as! CalculatorKeyList, answer: answer))
+            logHistory.append(ScientificCalculatorLog(keys: storage.keys.copy() as! CalculatorKeyList, answer: answer, variable: .answer))
         }
     }
 
@@ -104,7 +104,7 @@ public class ScientificCalculator: Calculator {
             storage.values[.answer] = answer  // save to answer
             storage.values[variable] = answer  // save to variable
             displayScreen.answer = answer
-            logHistory.append(ScientificCalculatorLog(keys: storage.keys.copy() as! CalculatorKeyList, answer: answer))
+            logHistory.append(ScientificCalculatorLog(keys: storage.keys.copy() as! CalculatorKeyList, answer: answer, variable: variable))
         }
     }
 

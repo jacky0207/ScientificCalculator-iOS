@@ -8,6 +8,7 @@
 public protocol CalculatorLog {
     var keys: CalculatorKeyList { get set }
     var answer: Double { get set }
+    var variable: CalculatorVariable { get set }
 }
 
 public protocol CalculatorLogHistory {
