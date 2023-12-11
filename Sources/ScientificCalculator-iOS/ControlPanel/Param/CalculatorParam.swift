@@ -9,7 +9,18 @@ public enum CalculatorParam {
     case angle
 }
 
-public enum CalculatorAngle {
-    case degree
-    case radian
+public enum CalculatorAngle: String {
+    case degree = "Deg"
+    case radian = "Rad"
+}
+
+extension CalculatorAngle {
+    public mutating func toggle() {
+        switch self {
+        case .degree:
+            self = .radian
+        case .radian:
+            self = .degree
+        }
+    }
 }
