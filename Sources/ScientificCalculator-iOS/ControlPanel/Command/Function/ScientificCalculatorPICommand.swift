@@ -10,7 +10,7 @@ class ScientificCalculatorPICommand: ScientificCalculatorCommand {
         return .notExist
     }
 
-    override func answer(left: Double, right: Double) throws -> Double {
+    override func answer(left: Double, right: Double, params: [CalculatorParam: Any]) throws -> Double {
         return left * .pi
     }
 }

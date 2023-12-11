@@ -10,7 +10,7 @@ class ScientificCalculatorFactorialCommand: ScientificCalculatorCommand {
         return .notExist
     }
     
-    override func answer(left: Double, right: Double) throws -> Double {
+    override func answer(left: Double, right: Double, params: [CalculatorParam: Any]) throws -> Double {
         if left.truncatingRemainder(dividingBy: 1) != 0 {
             throw CalculatorError.math
         }

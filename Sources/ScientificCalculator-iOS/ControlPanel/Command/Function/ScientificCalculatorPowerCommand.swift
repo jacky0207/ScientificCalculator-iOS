@@ -8,7 +8,7 @@
 import Foundation
 
 class ScientificCalculatorPowerCommand: ScientificCalculatorCommand {
-    override func answer(left: Double, right: Double) throws -> Double {
+    override func answer(left: Double, right: Double, params: [CalculatorParam: Any]) throws -> Double {
         return pow(left, right)
     }
 }
@@ -18,7 +18,7 @@ class ScientificCalculatorInverseFractionCommand: ScientificCalculatorPowerComma
         return .notExist
     }
 
-    override func answer(left: Double, right: Double) throws -> Double {
+    override func answer(left: Double, right: Double, params: [CalculatorParam: Any]) throws -> Double {
         return pow(left, -1)
     }
 }
@@ -28,7 +28,7 @@ class ScientificCalculatorSquareCommand: ScientificCalculatorPowerCommand {
         return .notExist
     }
 
-    override func answer(left: Double, right: Double) throws -> Double {
+    override func answer(left: Double, right: Double, params: [CalculatorParam: Any]) throws -> Double {
         return pow(left, 2)
     }
 }
@@ -39,7 +39,7 @@ class ScientificCalculatorCubeCommand: ScientificCalculatorCommand {
         return .notExist
     }
 
-    override func answer(left: Double, right: Double) throws -> Double {
+    override func answer(left: Double, right: Double, params: [CalculatorParam: Any]) throws -> Double {
         return pow(left, 3)
     }
 }

@@ -12,7 +12,7 @@ class ScientificCalculatorRootCommand: ScientificCalculatorCommand {
         return .optional
     }
 
-    override func answer(left: Double, right: Double) throws -> Double {
+    override func answer(left: Double, right: Double, params: [CalculatorParam: Any]) throws -> Double {
         return pow(right, 1/left)
     }
 }
@@ -22,7 +22,7 @@ class ScientificCalculatorSquareRootCommand: ScientificCalculatorCommand {
         return .optional
     }
 
-    override func answer(left: Double, right: Double) throws -> Double {
+    override func answer(left: Double, right: Double, params: [CalculatorParam: Any]) throws -> Double {
         return left * sqrt(right)
     }
 }
@@ -32,7 +32,7 @@ class ScientificCalculatorCubeRootCommand: ScientificCalculatorCommand {
         return .optional
     }
     
-    override func answer(left: Double, right: Double) throws -> Double {
+    override func answer(left: Double, right: Double, params: [CalculatorParam: Any]) throws -> Double {
         return left * cbrt(right)
     }
 }

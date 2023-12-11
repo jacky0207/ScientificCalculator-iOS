@@ -12,6 +12,7 @@ import Combine
 public protocol Calculator: ObservableObject {
     // mode
     var mode: CalculatorMode { get }
+    var calculationParams: [CalculatorParam: Any] { get set }
     // components
     var storage: CalculatorStorage { get }
     var displayScreen: CalculatorDisplayScreen { get }

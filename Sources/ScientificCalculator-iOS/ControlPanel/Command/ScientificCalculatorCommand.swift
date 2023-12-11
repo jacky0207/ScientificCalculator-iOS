@@ -6,12 +6,12 @@
 //
 
 open class ScientificCalculatorCommand: CalculatorCommand {
-    func execute(node: CalculatorKeyNode) throws -> CalculatorCommandResult {
+    func execute(node: CalculatorKeyNode, params: [CalculatorParam: Any]) throws -> CalculatorCommandResult {
         let head = try previousNumberHead(of: node)
         let left = try previousNumber(from: head, before: node)
         let tail = try nextNumberTail(of: node)
         let right = try nextNumber(after: node, to: tail)
-        let answer = try answer(left: left, right: right)
+        let answer = try answer(left: left, right: right, params: params)
         let newKeys = try CalculatorKeyConverter().convertKeys(from: answer)
         return CalculatorCommandResult(
             head: head,
@@ -94,7 +94,7 @@ open class ScientificCalculatorCommand: CalculatorCommand {
         }
     }
 
-    func answer(left: Double, right: Double) throws -> Double {
-        fatalError("Please override function without super.answer(left:right:)")
+    func answer(left: Double, right: Double, params: [CalculatorParam : Any]) throws -> Double {
+        fatalError("Please override function without super.answer(left:right:params:)")
     }
 }

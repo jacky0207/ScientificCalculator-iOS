@@ -24,7 +24,7 @@ final class ScientificCalculatorPICommandTests: XCTestCase {
         let `operator` = CalculatorKeyNode(key: .function(.pi))
         nodes.append(.number(.two))
         nodes.append(from: `operator`)
-        let result = try factorialCommand.execute(node: `operator`)
+        let result = try factorialCommand.execute(node: `operator`, params: [:])
         XCTAssertEqual(result.head.key.text, "2")
         XCTAssertEqual(result.tail.key.text, "π")
         XCTAssertEqual(result.newKeys.text, "\(2 * Double.pi)")

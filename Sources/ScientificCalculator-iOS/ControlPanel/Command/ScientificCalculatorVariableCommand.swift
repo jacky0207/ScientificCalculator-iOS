@@ -12,8 +12,8 @@ class ScientificCalculatorVariableCommand: ScientificCalculatorCommand, Calculat
         return .optional
     }
 
-    override func execute(node: CalculatorKeyNode) throws -> CalculatorCommandResult {
-        fatalError("Please use execute(node:value:)")
+    override func execute(node: CalculatorKeyNode, params: [CalculatorParam: Any]) throws -> CalculatorCommandResult {
+        fatalError("Please use execute(node:value:params:)")
     }
 
     func execute(node: CalculatorKeyNode, value: Double) throws -> CalculatorCommandResult {

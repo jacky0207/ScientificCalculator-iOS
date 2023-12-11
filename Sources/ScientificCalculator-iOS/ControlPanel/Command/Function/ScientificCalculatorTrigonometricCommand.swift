@@ -12,8 +12,14 @@ class ScientificCalculatorSinCommand: ScientificCalculatorCommand {
         return .optional
     }
 
-    override func answer(left: Double, right: Double) throws -> Double {
-        return left * __sinpi(right / 180)
+    override func answer(left: Double, right: Double, params: [CalculatorParam: Any]) throws -> Double {
+        let angle = params[.angle] as? CalculatorAngle ?? .degree
+        switch angle {
+        case .degree:
+            return left * __sinpi(right / 180)
+        case .radian:
+            return left * sin(right)
+        }
     }
 }
 
@@ -22,8 +28,14 @@ class ScientificCalculatorCosCommand: ScientificCalculatorCommand {
         return .optional
     }
 
-    override func answer(left: Double, right: Double) throws -> Double {
-        return left * __cospi(right / 180)
+    override func answer(left: Double, right: Double, params: [CalculatorParam: Any]) throws -> Double {
+        let angle = params[.angle] as? CalculatorAngle ?? .degree
+        switch angle {
+        case .degree:
+            return left * __cospi(right / 180)
+        case .radian:
+            return left * cos(right)
+        }
     }
 }
 
@@ -32,10 +44,16 @@ class ScientificCalculatorTanCommand: ScientificCalculatorCommand {
         return .optional
     }
 
-    override func answer(left: Double, right: Double) throws -> Double {
+    override func answer(left: Double, right: Double, params: [CalculatorParam: Any]) throws -> Double {
         if right.truncatingRemainder(dividingBy: 180) == 90 {
             throw CalculatorError.math
         }
-        return left * __tanpi(right / 180)
+        let angle = params[.angle] as? CalculatorAngle ?? .degree
+        switch angle {
+        case .degree:
+            return left * __tanpi(right / 180)
+        case .radian:
+            return left * tan(right)
+        }
     }
 }

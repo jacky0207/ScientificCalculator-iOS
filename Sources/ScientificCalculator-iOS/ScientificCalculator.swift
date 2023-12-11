@@ -17,6 +17,9 @@ public class ScientificCalculator: Calculator {
             clearAll()
         }
     }
+    @Published public var calculationParams: [CalculatorParam: Any] = [
+        .angle: CalculatorAngle.degree
+    ]
 
     private(set) public var storage: CalculatorStorage = ScientificCalculatorStorage()
     @Published private(set) public var displayScreen: CalculatorDisplayScreen = ScientificCalculatorDisplayScreen()
@@ -68,7 +71,7 @@ public class ScientificCalculator: Calculator {
     public func calculate() throws {
         switch mode {
         case .program:
-            let answer = try controlPanel.calculate(for: storage.keys, with: storage.values)
+            let answer = try controlPanel.calculate(for: storage.keys, with: storage.values, params: calculationParams)
             storage.values[.answer] = answer  // save to answer
             storage.values[programExecutor.equation.variable] = answer
             logHistory.append(ScientificCalculatorLog(keys: storage.keys.copy() as! CalculatorKeyList, answer: answer))
@@ -78,7 +81,7 @@ public class ScientificCalculator: Calculator {
                 mode = .default
             }
         default:
-            let answer = try controlPanel.calculate(for: storage.keys, with: storage.values)
+            let answer = try controlPanel.calculate(for: storage.keys, with: storage.values, params: calculationParams)
             storage.values[.answer] = answer  // save to answer
             displayScreen.answer = answer
             logHistory.append(ScientificCalculatorLog(keys: storage.keys.copy() as! CalculatorKeyList, answer: answer))
@@ -90,7 +93,7 @@ public class ScientificCalculator: Calculator {
         case .program:
             break  // not allow saving variable in program mode
         default:
-            let answer = try controlPanel.calculate(for: storage.keys, with: storage.values)
+            let answer = try controlPanel.calculate(for: storage.keys, with: storage.values, params: calculationParams)
             storage.values[.answer] = answer  // save to answer
             storage.values[variable] = answer  // save to variable
             displayScreen.answer = answer

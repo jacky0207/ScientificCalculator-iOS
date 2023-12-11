@@ -25,7 +25,7 @@ final class ScientificCalculatorExponentCommandTests: XCTestCase {
         nodes.append(.number(.two))
         nodes.append(from: `operator`)
         nodes.append(.number(.three))
-        let result = try command.execute(node: `operator`)
+        let result = try command.execute(node: `operator`, params: [:])
         XCTAssertEqual(result.head.key.text, "2")
         XCTAssertEqual(result.tail.key.text, "3")
         XCTAssertEqual(result.newKeys.text, "2000")
