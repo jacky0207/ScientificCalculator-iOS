@@ -41,6 +41,8 @@ class ScientificCalculatorCommandFactory {
         switch type {
         case .exponent:
             return ScientificCalculatorExponentCommand()
+        case .pi:
+            return ScientificCalculatorPICommand()
         case .factorial:
             return ScientificCalculatorFactorialCommand()
         case .power:
