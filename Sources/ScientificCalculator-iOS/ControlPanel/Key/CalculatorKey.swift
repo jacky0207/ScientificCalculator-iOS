@@ -52,6 +52,7 @@ public enum CalculatorOperator: String, CaseIterable {
 }
 
 public enum CalculatorFunction: String, CaseIterable {
+    case exponent = "\u{1D07}"
     case factorial = "!"
     case power = "^"
     case inverseFraction = "\u{207B}\u{00B9}"
