@@ -12,7 +12,7 @@ protocol CalculatorVariableCommand {
 // MARK: - CalculatorVariableCommand
 extension CalculatorVariable {
     static var variableCommandKeys: [CalculatorVariable] {
-        return [.a, .b, .c, .d]
+        return [.a, .b, .c, .d, .answer]
     }
 }
 

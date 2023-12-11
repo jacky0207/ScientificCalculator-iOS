@@ -73,6 +73,7 @@ public enum CalculatorFunction: String, CaseIterable {
 }
 
 public enum CalculatorVariable: String, CaseIterable {
+    case answer = "Ans"
     case a = "a"
     case b = "b"
     case c = "c"

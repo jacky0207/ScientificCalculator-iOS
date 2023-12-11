@@ -69,6 +69,7 @@ public class ScientificCalculator: Calculator {
         switch mode {
         case .program:
             let answer = try controlPanel.calculate(for: storage.keys, with: storage.values)
+            storage.values[.answer] = answer  // save to answer
             storage.values[programExecutor.equation.variable] = answer
             logHistory.append(ScientificCalculatorLog(keys: storage.keys.copy() as! CalculatorKeyList, answer: answer))
             if programExecutor.hasNextEquation() {
@@ -78,6 +79,7 @@ public class ScientificCalculator: Calculator {
             }
         default:
             let answer = try controlPanel.calculate(for: storage.keys, with: storage.values)
+            storage.values[.answer] = answer  // save to answer
             displayScreen.answer = answer
             logHistory.append(ScientificCalculatorLog(keys: storage.keys.copy() as! CalculatorKeyList, answer: answer))
         }
@@ -89,6 +91,7 @@ public class ScientificCalculator: Calculator {
             break  // not allow saving variable in program mode
         default:
             let answer = try controlPanel.calculate(for: storage.keys, with: storage.values)
+            storage.values[.answer] = answer  // save to answer
             storage.values[variable] = answer  // save to variable
             displayScreen.answer = answer
             logHistory.append(ScientificCalculatorLog(keys: storage.keys.copy() as! CalculatorKeyList, answer: answer))

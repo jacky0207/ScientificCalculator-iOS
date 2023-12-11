@@ -67,6 +67,15 @@ final class ScientificCalculatorTests: XCTestCase {
         XCTAssertEqual(calculator.answer, 9)
     }
 
+    func testScientificCalculator_CalculateToAnswer() throws {
+        calculator.appendKey(.number(.one))
+        calculator.appendKey(.operator(.plus))
+        calculator.appendKey(.number(.two))
+        try calculator.calculate()
+        XCTAssertEqual(calculator.answer, 3)
+        XCTAssertEqual(calculator.storage.values[.answer], 3)
+    }
+
     func testScientificCalculator_CalculateToVariable() throws {
         calculator.appendKey(.number(.two))
         calculator.appendKey(.bracket(.openBracket))
