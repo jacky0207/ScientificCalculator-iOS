@@ -6,6 +6,7 @@
 //
 
 import Combine
+import SwiftUI
 
 @available(macOS 10.15, *)
 @available(iOS 13.0, *)
@@ -20,6 +21,12 @@ public class ScientificCalculator: Calculator {
     @Published public var calculationParams: [CalculatorParam: Any] = [
         .angle: CalculatorAngle.degree
     ]
+    public var angle: Binding<CalculatorAngle> {
+        return Binding(
+            get: { self.calculationParams[.angle] as? CalculatorAngle ?? .degree },
+            set: { self.calculationParams[.angle] = $0 }
+        )
+    }
 
     private(set) public var storage: CalculatorStorage = ScientificCalculatorStorage()
     @Published private(set) public var displayScreen: CalculatorDisplayScreen = ScientificCalculatorDisplayScreen()

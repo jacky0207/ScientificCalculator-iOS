@@ -6,6 +6,7 @@
 //
 
 import Combine
+import SwiftUI
 
 @available(macOS 10.15, *)
 @available(iOS 13.0, *)
@@ -13,6 +14,7 @@ public protocol Calculator: ObservableObject {
     // mode
     var mode: CalculatorMode { get }
     var calculationParams: [CalculatorParam: Any] { get set }
+    var angle: Binding<CalculatorAngle> { get }
     // components
     var storage: CalculatorStorage { get }
     var displayScreen: CalculatorDisplayScreen { get }
