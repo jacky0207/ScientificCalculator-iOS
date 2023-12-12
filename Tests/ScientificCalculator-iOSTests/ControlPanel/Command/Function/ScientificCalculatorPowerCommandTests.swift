@@ -28,7 +28,7 @@ final class ScientificCalculatorPowerCommandTests: XCTestCase {
         nodes.append(.number(.two))
         nodes.append(from: `operator`)
         nodes.append(.number(.four))
-        let result = try powerCommand.execute(node: `operator`)
+        let result = try powerCommand.execute(node: `operator`, params: [:])
         XCTAssertEqual(result.head.key.text, "2")
         XCTAssertEqual(result.tail.key.text, "4")
         XCTAssertEqual(result.newKeys.text, "16")
@@ -39,7 +39,7 @@ final class ScientificCalculatorPowerCommandTests: XCTestCase {
         let `operator` = CalculatorKeyNode(key: .function(.inverseFraction))
         nodes.append(.number(.two))
         nodes.append(from: `operator`)
-        let result = try inverseFractionCommand.execute(node: `operator`)
+        let result = try inverseFractionCommand.execute(node: `operator`, params: [:])
         XCTAssertEqual(result.head.key.text, "2")
         XCTAssertEqual(result.tail.key.text, "\u{207B}\u{00B9}")
         XCTAssertEqual(result.newKeys.text, "0.5")
@@ -51,7 +51,7 @@ final class ScientificCalculatorPowerCommandTests: XCTestCase {
         nodes.append(.number(.two))
         nodes.append(from: `operator`)
         nodes.append(.number(.two))
-        XCTAssertThrowsError(try inverseFractionCommand.execute(node: `operator`)) { error in
+        XCTAssertThrowsError(try inverseFractionCommand.execute(node: `operator`, params: [:])) { error in
             XCTAssertEqual(error as? CalculatorError, .syntax)
         }
     }
@@ -61,7 +61,7 @@ final class ScientificCalculatorPowerCommandTests: XCTestCase {
         let `operator` = CalculatorKeyNode(key: .function(.square))
         nodes.append(.number(.three))
         nodes.append(from: `operator`)
-        let result = try squareCommand.execute(node: `operator`)
+        let result = try squareCommand.execute(node: `operator`, params: [:])
         XCTAssertEqual(result.head.key.text, "3")
         XCTAssertEqual(result.tail.key.text, "\u{00B2}")
         XCTAssertEqual(result.newKeys.text, "9")
@@ -73,7 +73,7 @@ final class ScientificCalculatorPowerCommandTests: XCTestCase {
         nodes.append(.number(.three))
         nodes.append(from: `operator`)
         nodes.append(.number(.three))
-        XCTAssertThrowsError(try squareCommand.execute(node: `operator`)) { error in
+        XCTAssertThrowsError(try squareCommand.execute(node: `operator`, params: [:])) { error in
             XCTAssertEqual(error as? CalculatorError, .syntax)
         }
     }
@@ -83,7 +83,7 @@ final class ScientificCalculatorPowerCommandTests: XCTestCase {
         let `operator` = CalculatorKeyNode(key: .function(.cube))
         nodes.append(.number(.three))
         nodes.append(from: `operator`)
-        let result = try cubeCommand.execute(node: `operator`)
+        let result = try cubeCommand.execute(node: `operator`, params: [:])
         XCTAssertEqual(result.head.key.text, "3")
         XCTAssertEqual(result.tail.key.text, "\u{00B3}")
         XCTAssertEqual(result.newKeys.text, "27")
@@ -95,7 +95,7 @@ final class ScientificCalculatorPowerCommandTests: XCTestCase {
         nodes.append(.number(.three))
         nodes.append(from: `operator`)
         nodes.append(.number(.three))
-        XCTAssertThrowsError(try cubeCommand.execute(node: `operator`)) { error in
+        XCTAssertThrowsError(try cubeCommand.execute(node: `operator`, params: [:])) { error in
             XCTAssertEqual(error as? CalculatorError, .syntax)
         }
     }

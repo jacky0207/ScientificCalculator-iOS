@@ -12,7 +12,7 @@ class ScientificCalculatorLogCommand: ScientificCalculatorCommand {
         return .optional
     }
 
-    override func answer(left: Double, right: Double) throws -> Double {
+    override func answer(left: Double, right: Double, params: [CalculatorParam: Any]) throws -> Double {
         return left * log10(right)
     }
 }
@@ -23,7 +23,7 @@ class ScientificCalculatorNaturalLogCommand: ScientificCalculatorCommand {
         return .optional
     }
 
-    override func answer(left: Double, right: Double) throws -> Double {
+    override func answer(left: Double, right: Double, params: [CalculatorParam: Any]) throws -> Double {
         return left * log(right)
     }
 }

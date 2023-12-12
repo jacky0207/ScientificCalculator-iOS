@@ -33,7 +33,7 @@ fileprivate class ScientificCalculatorTestCommand: ScientificCalculatorCommand {
         return tailType
     }
 
-    override func answer(left: Double, right: Double) throws -> Double {
+    override func answer(left: Double, right: Double, params: [CalculatorParam: Any]) throws -> Double {
         return left + right
     }
 }
@@ -56,7 +56,7 @@ final class ScientificCalculatorCommandTests: XCTestCase {
         nodes.append(.number(.one))
         nodes.append(from: `operator`)
         nodes.append(.number(.two))
-        let result = try command.execute(node: `operator`)
+        let result = try command.execute(node: `operator`, params: [:])
         XCTAssertEqual(result.head.key.text, "1")
         XCTAssertEqual(result.tail.key.text, "2")
         XCTAssertEqual(result.newKeys.text, "3")
@@ -70,7 +70,7 @@ final class ScientificCalculatorCommandTests: XCTestCase {
         let `operator` = CalculatorKeyNode(key: .operator(.plus))
         nodes.append(from: `operator`)
         nodes.append(.number(.two))
-        XCTAssertThrowsError(try command.execute(node: `operator`)) { error in
+        XCTAssertThrowsError(try command.execute(node: `operator`, params: [:])) { error in
             XCTAssertEqual(error as? CalculatorError, .syntax)
         }
     }
@@ -83,7 +83,7 @@ final class ScientificCalculatorCommandTests: XCTestCase {
         let `operator` = CalculatorKeyNode(key: .operator(.plus))
         nodes.append(.number(.two))
         nodes.append(from: `operator`)
-        XCTAssertThrowsError(try command.execute(node: `operator`)) { error in
+        XCTAssertThrowsError(try command.execute(node: `operator`, params: [:])) { error in
             XCTAssertEqual(error as? CalculatorError, .syntax)
         }
     }
@@ -96,7 +96,7 @@ final class ScientificCalculatorCommandTests: XCTestCase {
         let `operator` = CalculatorKeyNode(key: .operator(.plus))
         nodes.append(from: `operator`)
         nodes.append(.number(.two))
-        let result = try command.execute(node: `operator`)
+        let result = try command.execute(node: `operator`, params: [:])
         XCTAssertEqual(result.head.key.text, "+")
         XCTAssertEqual(result.tail.key.text, "2")
         XCTAssertEqual(result.newKeys.text, "3")
@@ -110,7 +110,7 @@ final class ScientificCalculatorCommandTests: XCTestCase {
         let `operator` = CalculatorKeyNode(key: .operator(.plus))
         nodes.append(.number(.two))
         nodes.append(from: `operator`)
-        let result = try command.execute(node: `operator`)
+        let result = try command.execute(node: `operator`, params: [:])
         XCTAssertEqual(result.head.key.text, "2")
         XCTAssertEqual(result.tail.key.text, "+")
         XCTAssertEqual(result.newKeys.text, "3")
@@ -124,7 +124,7 @@ final class ScientificCalculatorCommandTests: XCTestCase {
         let `operator` = CalculatorKeyNode(key: .operator(.plus))
         nodes.append(.number(.two))
         nodes.append(from: `operator`)
-        XCTAssertThrowsError(try command.execute(node: `operator`)) { error in
+        XCTAssertThrowsError(try command.execute(node: `operator`, params: [:])) { error in
             XCTAssertEqual(error as? CalculatorError, .syntax)
         }
     }
@@ -137,7 +137,7 @@ final class ScientificCalculatorCommandTests: XCTestCase {
         let `operator` = CalculatorKeyNode(key: .operator(.plus))
         nodes.append(from: `operator`)
         nodes.append(.number(.two))
-        XCTAssertThrowsError(try command.execute(node: `operator`)) { error in
+        XCTAssertThrowsError(try command.execute(node: `operator`, params: [:])) { error in
             XCTAssertEqual(error as? CalculatorError, .syntax)
         }
     }
@@ -153,7 +153,7 @@ final class ScientificCalculatorCommandTests: XCTestCase {
         nodes.append(from: `operator`)
         nodes.append(.operator(.plus))
         nodes.append(.number(.three))
-        let result = try command.execute(node: `operator`)
+        let result = try command.execute(node: `operator`, params: [:])
         XCTAssertEqual(result.head.key.text, "2")
         XCTAssertEqual(result.tail.key.text, "\u{00B2}")
         XCTAssertEqual(result.newKeys.text, "3")

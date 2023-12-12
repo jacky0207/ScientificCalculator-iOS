@@ -8,10 +8,16 @@
 public class ScientificCalculatorLog: CalculatorLog {
     public var keys: CalculatorKeyList
     public var answer: Double
+    public var variable: CalculatorVariable
 
-    public init(keys: CalculatorKeyList, answer: Double) {
+    public init(
+        keys: CalculatorKeyList,
+        answer: Double,
+        variable: CalculatorVariable
+    ) {
         self.keys = keys
         self.answer = answer
+        self.variable = variable
     }
 }
 

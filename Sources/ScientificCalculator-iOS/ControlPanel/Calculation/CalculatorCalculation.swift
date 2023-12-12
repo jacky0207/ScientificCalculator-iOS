@@ -6,19 +6,19 @@
 //
 
 protocol CalculatorCalculation {
-    func executeCalculateKeys(_ keys: [CalculatorKey], for pressedKeys: CalculatorKeyList) throws -> CalculatorKeyList
-    func simplifyPlusMinus(for keys: CalculatorKeyList) throws -> CalculatorKeyList
-    func simplifyMultiplyDivide(for keys: CalculatorKeyList) throws -> CalculatorKeyList
-    func simplifyFunction(for keys: CalculatorKeyList) throws -> CalculatorKeyList
+    func executeCalculateKeys(_ keys: [CalculatorKey], params: [CalculatorParam: Any], for pressedKeys: CalculatorKeyList) throws -> CalculatorKeyList
+    func simplifyPlusMinus(for keys: CalculatorKeyList, params: [CalculatorParam: Any]) throws -> CalculatorKeyList
+    func simplifyMultiplyDivide(for keys: CalculatorKeyList, params: [CalculatorParam: Any]) throws -> CalculatorKeyList
+    func simplifyFunction(for keys: CalculatorKeyList, params: [CalculatorParam: Any]) throws -> CalculatorKeyList
     func executeCalculateVariable(_ variables: [CalculatorVariable], with values: [CalculatorVariable: Double], for pressedKeys: CalculatorKeyList) throws -> CalculatorKeyList
     func simplifyVariable(for keys: CalculatorKeyList, with values: [CalculatorVariable: Double]) throws -> CalculatorKeyList
-    func executeCalculateKeyPair(_ keyPair: CalculatorKeyPair, with values: [CalculatorVariable: Double], for pressedKeys: CalculatorKeyList) throws -> CalculatorKeyList
-    func simplifyBracket(for keys: CalculatorKeyList, with values: [CalculatorVariable: Double]) throws -> CalculatorKeyList
-    func calculate(for keys: CalculatorKeyList, with values: [CalculatorVariable: Double]) throws -> Double
+    func executeCalculateKeyPair(_ keyPair: CalculatorKeyPair, with values: [CalculatorVariable: Double], params: [CalculatorParam: Any], for pressedKeys: CalculatorKeyList) throws -> CalculatorKeyList
+    func simplifyBracket(for keys: CalculatorKeyList, with values: [CalculatorVariable: Double], params: [CalculatorParam: Any]) throws -> CalculatorKeyList
+    func calculate(for keys: CalculatorKeyList, with values: [CalculatorVariable: Double], params: [CalculatorParam: Any]) throws -> Double
 }
 
 extension CalculatorCalculation {
-    func executeCalculateKeys(_ keys: [CalculatorKey], for pressedKeys: CalculatorKeyList) throws -> CalculatorKeyList {
+    func executeCalculateKeys(_ keys: [CalculatorKey], params: [CalculatorParam: Any], for pressedKeys: CalculatorKeyList) throws -> CalculatorKeyList {
         var node = pressedKeys.head
         while true {
             guard let curr = node else {
@@ -26,7 +26,7 @@ extension CalculatorCalculation {
             }
             if keys.contains(curr.key) {
                 let command = ScientificCalculatorCommandFactory.shared.commandInstance(of: curr.key)
-                let result = try command.execute(node: curr)
+                let result = try command.execute(node: curr, params: params)
                 CalculatorKeyEditor().replace(pressedKeys, withResult: result)
                 node = result.newKeys.tail?.next
             } else {
@@ -54,7 +54,7 @@ extension CalculatorCalculation {
         return pressedKeys
     }
 
-    func executeCalculateKeyPair(_ keyPair: CalculatorKeyPair, with values: [CalculatorVariable: Double], for pressedKeys: CalculatorKeyList) throws -> CalculatorKeyList {
+    func executeCalculateKeyPair(_ keyPair: CalculatorKeyPair, with values: [CalculatorVariable: Double], params: [CalculatorParam: Any], for pressedKeys: CalculatorKeyList) throws -> CalculatorKeyList {
         var node = pressedKeys.head
         var openBracketStack = [CalculatorKeyNode]()
         while true {
@@ -70,7 +70,7 @@ extension CalculatorCalculation {
                 }
                 let command = ScientificCalculatorCommandFactory.shared.bracketPairCommandInstance(of: bracket)
                 let result = try command.execute(from: openBracket, to: curr) { keys in
-                    try CalculatorKeyConverter().convertKeys(from: calculate(for: keys, with: values))
+                    try CalculatorKeyConverter().convertKeys(from: calculate(for: keys, with: values, params: params))
                 }
                 CalculatorKeyEditor().replace(pressedKeys, withResult: result)
                 node = result.newKeys.tail?.next

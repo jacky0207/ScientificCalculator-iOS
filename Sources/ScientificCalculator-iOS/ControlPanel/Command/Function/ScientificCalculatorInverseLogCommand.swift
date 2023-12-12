@@ -12,7 +12,7 @@ class ScientificCalculatorPowerOfTenCommand: ScientificCalculatorCommand {
         return .optional
     }
 
-    override func answer(left: Double, right: Double) throws -> Double {
+    override func answer(left: Double, right: Double, params: [CalculatorParam: Any]) throws -> Double {
         return left * pow(10, right)
     }
 }
@@ -22,7 +22,7 @@ class ScientificCalculatorExponentialCommand: ScientificCalculatorCommand {
         return .optional
     }
     
-    override func answer(left: Double, right: Double) throws -> Double {
+    override func answer(left: Double, right: Double, params: [CalculatorParam: Any]) throws -> Double {
         return left * exp(right)
     }
 }

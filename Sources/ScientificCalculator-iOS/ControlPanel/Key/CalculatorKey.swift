@@ -14,7 +14,7 @@ public enum CalculatorKey: Equatable, Hashable {
 }
 
 extension CalculatorKey {
-    var text: String {
+    public var text: String {
         switch self {
         case .number(let number):
             return number.rawValue
@@ -52,6 +52,8 @@ public enum CalculatorOperator: String, CaseIterable {
 }
 
 public enum CalculatorFunction: String, CaseIterable {
+    case exponent = "\u{1D07}"
+    case pi = "\u{03C0}"
     case factorial = "!"
     case power = "^"
     case inverseFraction = "\u{207B}\u{00B9}"
@@ -73,6 +75,7 @@ public enum CalculatorFunction: String, CaseIterable {
 }
 
 public enum CalculatorVariable: String, CaseIterable {
+    case answer = "Ans"
     case a = "a"
     case b = "b"
     case c = "c"

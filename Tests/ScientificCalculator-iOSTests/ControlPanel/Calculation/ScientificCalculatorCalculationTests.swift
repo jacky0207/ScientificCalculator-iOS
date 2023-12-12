@@ -28,7 +28,7 @@ final class ScientificCalculatorCalculationTests: XCTestCase {
         nodes.append(.number(.three))
         nodes.append(.operator(.plus))
         nodes.append(.number(.four))
-        XCTAssertEqual(try calculation.simplifyPlusMinus(for: nodes).text, "10")
+        XCTAssertEqual(try calculation.simplifyPlusMinus(for: nodes, params: [:]).text, "10")
     }
 
     func testScientificCalculatorCalculation_Minus_Simplify() throws {
@@ -40,7 +40,7 @@ final class ScientificCalculatorCalculationTests: XCTestCase {
         nodes.append(.number(.two))
         nodes.append(.operator(.minus))
         nodes.append(.number(.three))
-        XCTAssertEqual(try calculation.simplifyPlusMinus(for: nodes).text, "3")
+        XCTAssertEqual(try calculation.simplifyPlusMinus(for: nodes, params: [:]).text, "3")
     }
 
     func testScientificCalculatorCalculation_PlusMinus_Simplify() throws {
@@ -54,7 +54,7 @@ final class ScientificCalculatorCalculationTests: XCTestCase {
         nodes.append(.number(.three))
         nodes.append(.operator(.minus))
         nodes.append(.number(.four))
-        XCTAssertEqual(try calculation.simplifyPlusMinus(for: nodes).text, "7")
+        XCTAssertEqual(try calculation.simplifyPlusMinus(for: nodes, params: [:]).text, "7")
     }
 
     func testScientificCalculatorCalculation_Multiply_Simplify() throws {
@@ -66,7 +66,7 @@ final class ScientificCalculatorCalculationTests: XCTestCase {
         nodes.append(.number(.three))
         nodes.append(.operator(.multiply))
         nodes.append(.number(.four))
-        XCTAssertEqual(try calculation.simplifyMultiplyDivide(for: nodes).text, "24")
+        XCTAssertEqual(try calculation.simplifyMultiplyDivide(for: nodes, params: [:]).text, "24")
     }
 
     func testScientificCalculatorCalculation_Divide_Simplify() throws {
@@ -79,7 +79,7 @@ final class ScientificCalculatorCalculationTests: XCTestCase {
         nodes.append(.number(.three))
         nodes.append(.operator(.divide))
         nodes.append(.number(.two))
-        XCTAssertEqual(try calculation.simplifyMultiplyDivide(for: nodes).text, "1")
+        XCTAssertEqual(try calculation.simplifyMultiplyDivide(for: nodes, params: [:]).text, "1")
     }
 
     func testScientificCalculatorCalculation_MultiplyDivide_Simplify() throws {
@@ -95,14 +95,14 @@ final class ScientificCalculatorCalculationTests: XCTestCase {
         nodes.append(.number(.three))
         nodes.append(.operator(.divide))
         nodes.append(.number(.nine))
-        XCTAssertEqual(try calculation.simplifyMultiplyDivide(for: nodes).text, "1+4")
+        XCTAssertEqual(try calculation.simplifyMultiplyDivide(for: nodes, params: [:]).text, "1+4")
     }
 
     func testScientificCalculatorCalculation_Function_Simplify() throws {
         let nodes = CalculatorKeyList()
         nodes.append(.number(.four))
         nodes.append(.function(.factorial))
-        XCTAssertEqual(try calculation.simplifyFunction(for: nodes).text, "24")
+        XCTAssertEqual(try calculation.simplifyFunction(for: nodes, params: [:]).text, "24")
     }
 
     func testScientificCalculatorCalculation_WithVariable_Simplify() throws {
@@ -123,7 +123,7 @@ final class ScientificCalculatorCalculationTests: XCTestCase {
         nodes.append(.number(.one))
         nodes.append(.operator(.plus))
         nodes.append(.number(.two))
-        XCTAssertThrowsError(try calculation.simplifyBracket(for: nodes, with: [:])) { error in
+        XCTAssertThrowsError(try calculation.simplifyBracket(for: nodes, with: [:], params: [:])) { error in
             XCTAssertEqual(error as? CalculatorError, .syntax)
         }
     }
@@ -131,7 +131,7 @@ final class ScientificCalculatorCalculationTests: XCTestCase {
     func testScientificCalculatorCalculation_BracketNotOpenBeforeClose_ThrowSyntaxError() throws {
         let nodes = CalculatorKeyList()
         nodes.append(.bracket(.closeBracket))
-        XCTAssertThrowsError(try calculation.simplifyBracket(for: nodes, with: [:])) { error in
+        XCTAssertThrowsError(try calculation.simplifyBracket(for: nodes, with: [:], params: [:])) { error in
             XCTAssertEqual(error as? CalculatorError, .syntax)
         }
     }
@@ -151,7 +151,7 @@ final class ScientificCalculatorCalculationTests: XCTestCase {
         nodes.append(.function(.sin))
         nodes.append(.number(.three))
         nodes.append(.number(.zero))
-        XCTAssertEqual(try calculation.simplifyBracket(for: nodes, with: [:]).text, "2x9sin30")
+        XCTAssertEqual(try calculation.simplifyBracket(for: nodes, with: [:], params: [:]).text, "2x9sin30")
     }
 
     func testScientificCalculatorCalculation_WithoutBracket_Calculate() throws {
@@ -164,7 +164,7 @@ final class ScientificCalculatorCalculationTests: XCTestCase {
         nodes.append(.function(.sin))
         nodes.append(.number(.three))
         nodes.append(.number(.zero))
-        XCTAssertEqual(try calculation.calculate(for: nodes, with: [:]), 4)
+        XCTAssertEqual(try calculation.calculate(for: nodes, with: [:], params: [:]), 4)
     }
 
     func testScientificCalculatorCalculation_WithBracket_Calculate() throws {
@@ -182,6 +182,6 @@ final class ScientificCalculatorCalculationTests: XCTestCase {
         nodes.append(.function(.sin))
         nodes.append(.number(.three))
         nodes.append(.number(.zero))
-        XCTAssertEqual(try calculation.calculate(for: nodes, with: [:]), 9)
+        XCTAssertEqual(try calculation.calculate(for: nodes, with: [:], params: [:]), 9)
     }
 }

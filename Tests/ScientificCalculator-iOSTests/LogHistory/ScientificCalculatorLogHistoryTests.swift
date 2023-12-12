@@ -22,7 +22,8 @@ final class ScientificCalculatorLogHistoryTests: XCTestCase {
     func testScientificCalculatorLogHistory_Append() {
         logHistory.append(ScientificCalculatorLog(
             keys: CalculatorKeyList(.number(.one), .operator(.plus), .number(.two)),
-            answer: 3
+            answer: 3,
+            variable: .answer
         ))
         XCTAssertTrue(!logHistory.logs.isEmpty)
     }
@@ -30,7 +31,8 @@ final class ScientificCalculatorLogHistoryTests: XCTestCase {
     func testScientificCalculatorLogHistory_RemoveAll() {
         logHistory.append(ScientificCalculatorLog(
             keys: CalculatorKeyList(.number(.one), .operator(.plus), .number(.two)),
-            answer: 3
+            answer: 3,
+            variable: .answer
         ))
         logHistory.removeAll()
         XCTAssertTrue(logHistory.logs.isEmpty)

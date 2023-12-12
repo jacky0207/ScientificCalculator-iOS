@@ -24,7 +24,7 @@ final class ScientificCalculatorFactorialCommandTests: XCTestCase {
         let `operator` = CalculatorKeyNode(key: .function(.factorial))
         nodes.append(.number(.four))
         nodes.append(from: `operator`)
-        let result = try factorialCommand.execute(node: `operator`)
+        let result = try factorialCommand.execute(node: `operator`, params: [:])
         XCTAssertEqual(result.head.key.text, "4")
         XCTAssertEqual(result.tail.key.text, "!")
         XCTAssertEqual(result.newKeys.text, "24")
@@ -36,7 +36,7 @@ final class ScientificCalculatorFactorialCommandTests: XCTestCase {
         nodes.append(.number(.four))
         nodes.append(from: `operator`)
         nodes.append(.number(.one))
-        XCTAssertThrowsError( try factorialCommand.execute(node: `operator`)) { error in
+        XCTAssertThrowsError( try factorialCommand.execute(node: `operator`, params: [:])) { error in
             XCTAssertEqual(error as? CalculatorError, .syntax)
         }
     }
@@ -48,7 +48,7 @@ final class ScientificCalculatorFactorialCommandTests: XCTestCase {
         nodes.append(.number(.dot))
         nodes.append(.number(.one))
         nodes.append(from: `operator`)
-        XCTAssertThrowsError( try factorialCommand.execute(node: `operator`)) { error in
+        XCTAssertThrowsError( try factorialCommand.execute(node: `operator`, params: [:])) { error in
             XCTAssertEqual(error as? CalculatorError, .math)
         }
     }
@@ -59,7 +59,7 @@ final class ScientificCalculatorFactorialCommandTests: XCTestCase {
         nodes.append(.operator(.minus))
         nodes.append(.number(.four))
         nodes.append(from: `operator`)
-        let result = try factorialCommand.execute(node: `operator`)
+        let result = try factorialCommand.execute(node: `operator`, params: [:])
         XCTAssertEqual(result.head.key.text, "-")
         XCTAssertEqual(result.tail.key.text, "!")
         XCTAssertEqual(result.newKeys.text, "-24")
@@ -70,7 +70,7 @@ final class ScientificCalculatorFactorialCommandTests: XCTestCase {
         let `operator` = CalculatorKeyNode(key: .function(.factorial))
         nodes.append(.number(.zero))
         nodes.append(from: `operator`)
-        let result = try factorialCommand.execute(node: `operator`)
+        let result = try factorialCommand.execute(node: `operator`, params: [:])
         XCTAssertEqual(result.head.key.text, "0")
         XCTAssertEqual(result.tail.key.text, "!")
         XCTAssertEqual(result.newKeys.text, "1")
@@ -81,7 +81,7 @@ final class ScientificCalculatorFactorialCommandTests: XCTestCase {
         let `operator` = CalculatorKeyNode(key: .function(.factorial))
         nodes.append(.number(.one))
         nodes.append(from: `operator`)
-        let result = try factorialCommand.execute(node: `operator`)
+        let result = try factorialCommand.execute(node: `operator`, params: [:])
         XCTAssertEqual(result.head.key.text, "1")
         XCTAssertEqual(result.tail.key.text, "!")
         XCTAssertEqual(result.newKeys.text, "1")

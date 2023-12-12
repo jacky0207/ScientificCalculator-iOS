@@ -6,12 +6,15 @@
 //
 
 import Combine
+import SwiftUI
 
 @available(macOS 10.15, *)
 @available(iOS 13.0, *)
 public protocol Calculator: ObservableObject {
     // mode
     var mode: CalculatorMode { get }
+    var calculationParams: [CalculatorParam: Any] { get set }
+    var angle: Binding<CalculatorAngle> { get }
     // components
     var storage: CalculatorStorage { get }
     var displayScreen: CalculatorDisplayScreen { get }
@@ -27,6 +30,7 @@ public protocol Calculator: ObservableObject {
     func appendKey(_ key: CalculatorKey)
     func setKeys(_ keys: CalculatorKeyList)
     func delete()
+    func deleteAll()
     func clearAll()
     func calculate() throws
     func calculate(to variable: CalculatorVariable) throws

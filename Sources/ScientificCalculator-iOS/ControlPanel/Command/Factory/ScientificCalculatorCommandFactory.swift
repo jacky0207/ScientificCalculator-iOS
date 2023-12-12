@@ -39,6 +39,10 @@ class ScientificCalculatorCommandFactory {
 
     func functionCommandInstance(of type: CalculatorFunction) -> CalculatorCommand {
         switch type {
+        case .exponent:
+            return ScientificCalculatorExponentCommand()
+        case .pi:
+            return ScientificCalculatorPICommand()
         case .factorial:
             return ScientificCalculatorFactorialCommand()
         case .power:
@@ -87,6 +91,8 @@ class ScientificCalculatorCommandFactory {
 
     func variableCommandInstance(of type: CalculatorVariable) -> CalculatorVariableCommand {
         switch type {
+        case .answer:
+            return ScientificCalculatorAnswerCommand()
         case .a, .b, .c, .d, .x, .y:
             return ScientificCalculatorVariableCommand()
         }

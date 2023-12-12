@@ -6,6 +6,7 @@
 //
 
 import Combine
+import SwiftUI
 
 @available(macOS 10.15, *)
 @available(iOS 13.0, *)
@@ -16,6 +17,15 @@ public class ScientificCalculator: Calculator {
         didSet {
             clearAll()
         }
+    }
+    @Published public var calculationParams: [CalculatorParam: Any] = [
+        .angle: CalculatorAngle.degree
+    ]
+    public var angle: Binding<CalculatorAngle> {
+        return Binding(
+            get: { self.calculationParams[.angle] as? CalculatorAngle ?? .degree },
+            set: { self.calculationParams[.angle] = $0 }
+        )
     }
 
     private(set) public var storage: CalculatorStorage = ScientificCalculatorStorage()
@@ -59,27 +69,33 @@ public class ScientificCalculator: Calculator {
         displayScreen.text = storage.keys.text
     }
 
-    public func clearAll() {
+    public func deleteAll() {
         controlPanel.clearAll(for: storage.keys)
         displayScreen.text = storage.keys.text
+    }
+
+    public func clearAll() {
+        deleteAll()
         displayScreen.answer = 0
     }
 
     public func calculate() throws {
         switch mode {
         case .program:
-            let answer = try controlPanel.calculate(for: storage.keys, with: storage.values)
+            let answer = try controlPanel.calculate(for: storage.keys, with: storage.values, params: calculationParams)
+            storage.values[.answer] = answer  // save to answer
             storage.values[programExecutor.equation.variable] = answer
-            logHistory.append(ScientificCalculatorLog(keys: storage.keys.copy() as! CalculatorKeyList, answer: answer))
+            logHistory.append(ScientificCalculatorLog(keys: storage.keys.copy() as! CalculatorKeyList, answer: answer, variable: programExecutor.equation.variable))
             if programExecutor.hasNextEquation() {
                 setKeys(programExecutor.nextEquation().keys)
             } else {
                 mode = .default
             }
         default:
-            let answer = try controlPanel.calculate(for: storage.keys, with: storage.values)
+            let answer = try controlPanel.calculate(for: storage.keys, with: storage.values, params: calculationParams)
+            storage.values[.answer] = answer  // save to answer
             displayScreen.answer = answer
-            logHistory.append(ScientificCalculatorLog(keys: storage.keys.copy() as! CalculatorKeyList, answer: answer))
+            logHistory.append(ScientificCalculatorLog(keys: storage.keys.copy() as! CalculatorKeyList, answer: answer, variable: .answer))
         }
     }
 
@@ -88,10 +104,11 @@ public class ScientificCalculator: Calculator {
         case .program:
             break  // not allow saving variable in program mode
         default:
-            let answer = try controlPanel.calculate(for: storage.keys, with: storage.values)
+            let answer = try controlPanel.calculate(for: storage.keys, with: storage.values, params: calculationParams)
+            storage.values[.answer] = answer  // save to answer
             storage.values[variable] = answer  // save to variable
             displayScreen.answer = answer
-            logHistory.append(ScientificCalculatorLog(keys: storage.keys.copy() as! CalculatorKeyList, answer: answer))
+            logHistory.append(ScientificCalculatorLog(keys: storage.keys.copy() as! CalculatorKeyList, answer: answer, variable: variable))
         }
     }
 

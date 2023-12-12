@@ -56,6 +56,6 @@ final class ScientificCalculatorControlPanelTests: XCTestCase {
         controlPanel.appendKey(.function(.sin), to: keys)
         controlPanel.appendKey(.number(.three), to: keys)
         controlPanel.appendKey(.variable(.c), to: keys)  // 10
-        XCTAssertEqual(try controlPanel.calculate(for: keys, with: [.a: 2, .b: 1, .c: 10]), 18)
+        XCTAssertEqual(try controlPanel.calculate(for: keys, with: [.a: 2, .b: 1, .c: 10], params: [:]), 18)
     }
 }

@@ -21,14 +21,14 @@ enum CalculatorCommandType {
 }
 
 protocol CalculatorCommand {
-    func execute(node: CalculatorKeyNode) throws -> CalculatorCommandResult
+    func execute(node: CalculatorKeyNode, params: [CalculatorParam: Any]) throws -> CalculatorCommandResult
     func previousNumberType() -> CalculatorCommandType
     func previousNumberHead(of node: CalculatorKeyNode) throws -> CalculatorKeyNode
     func previousNumber(from head: CalculatorKeyNode, before node: CalculatorKeyNode) throws -> Double
     func nextNumberType() -> CalculatorCommandType
     func nextNumberTail(of node: CalculatorKeyNode) throws -> CalculatorKeyNode
     func nextNumber(after node: CalculatorKeyNode, to tail: CalculatorKeyNode) throws -> Double
-    func answer(left: Double, right: Double) throws -> Double
+    func answer(left: Double, right: Double, params: [CalculatorParam: Any]) throws -> Double
 }
 
 // MARK: - CalculatorKey
@@ -60,25 +60,6 @@ extension CalculatorKey {
     }
 
     static var functionCommandKeys: [CalculatorKey] {
-        return CalculatorFunction.allCases
-            .filter { type in
-                switch type {
-                case .factorial:
-                    return true
-                case .power, .inverseFraction, .square, .cube:
-                    return true
-                case .root, .squareRoot, .cubeRoot:
-                    return true
-                case .log, .naturalLog:
-                    return true
-                case .powerOfTen, .exponential:
-                    return true
-                case .sin, .cos, .tan:
-                    return true
-                case .inverseSin, .inverseCos, .inverseTan:
-                    return true
-                }
-            }
-            .map { .function($0) }
+        return CalculatorFunction.allCases.map { .function($0) }
     }
 }
