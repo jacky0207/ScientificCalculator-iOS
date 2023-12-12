@@ -30,6 +30,7 @@ public protocol Calculator: ObservableObject {
     func appendKey(_ key: CalculatorKey)
     func setKeys(_ keys: CalculatorKeyList)
     func delete()
+    func deleteAll()
     func clearAll()
     func calculate() throws
     func calculate(to variable: CalculatorVariable) throws

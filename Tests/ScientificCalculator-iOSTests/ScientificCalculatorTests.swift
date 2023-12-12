@@ -40,6 +40,15 @@ final class ScientificCalculatorTests: XCTestCase {
         XCTAssertEqual(calculator.text, "1")
     }
 
+    func testScientificCalculator_DeleteAll() throws {
+        calculator.appendKey(.number(.one))
+        calculator.appendKey(.number(.two))
+        try calculator.calculate()
+        calculator.deleteAll()
+        XCTAssertEqual(calculator.text, "")
+        XCTAssertEqual(calculator.answer, 12)
+    }
+
     func testScientificCalculator_ClearAll() throws {
         calculator.appendKey(.number(.one))
         calculator.appendKey(.number(.two))

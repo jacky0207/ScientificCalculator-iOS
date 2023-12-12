@@ -69,9 +69,13 @@ public class ScientificCalculator: Calculator {
         displayScreen.text = storage.keys.text
     }
 
-    public func clearAll() {
+    public func deleteAll() {
         controlPanel.clearAll(for: storage.keys)
         displayScreen.text = storage.keys.text
+    }
+
+    public func clearAll() {
+        deleteAll()
         displayScreen.answer = 0
     }
 
