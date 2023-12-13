@@ -21,6 +21,7 @@ public protocol CalculatorKeyCollection {
     init(_ head: CalculatorKeyNode)
     init(_ keys: CalculatorKey...)
     func append(_ key: CalculatorKey)
+    var text: String { get }
 }
 
 public class CalculatorKeyList: CalculatorKeyCollection {
@@ -56,7 +57,7 @@ public class CalculatorKeyList: CalculatorKeyCollection {
         tail = CalculatorKeyTraveler().tail(of: node)
     }
 
-    var text: String {
+    public var text: String {
         var text = ""
         var node = entry.next
         outer: while true {
