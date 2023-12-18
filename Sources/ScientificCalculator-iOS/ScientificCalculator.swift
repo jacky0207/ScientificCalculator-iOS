@@ -80,6 +80,9 @@ public class ScientificCalculator: Calculator {
     }
 
     public func calculate() throws {
+        if displayScreen.text.isEmpty {
+            return
+        }
         switch mode {
         case .program:
             let answer = try controlPanel.calculate(for: storage.keys, with: storage.values, params: calculationParams)
@@ -100,6 +103,9 @@ public class ScientificCalculator: Calculator {
     }
 
     public func calculate(to variable: CalculatorVariable) throws {
+        if displayScreen.text.isEmpty {
+            return
+        }
         switch mode {
         case .program:
             break  // not allow saving variable in program mode
