@@ -5,7 +5,10 @@
 //  Created by Jacky Lam on 2023-11-27.
 //
 
+import Foundation
+
 public class ScientificCalculatorLog: CalculatorLog {
+    public var id: String = UUID().uuidString
     public var keys: CalculatorKeyList
     public var answer: Double
     public var variable: CalculatorVariable

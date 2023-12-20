@@ -7,7 +7,7 @@
 
 import Foundation
 
-class CalculatorKeyNode {
+public class CalculatorKeyNode {
     var key: CalculatorKey
     var prev: CalculatorKeyNode?
     var next: CalculatorKeyNode?
@@ -17,17 +17,24 @@ class CalculatorKeyNode {
     }
 }
 
-public class CalculatorKeyList {
+public protocol CalculatorKeyCollection {
+    init(_ head: CalculatorKeyNode)
+    init(_ keys: CalculatorKey...)
+    func append(_ key: CalculatorKey)
+    var text: String { get }
+}
+
+public class CalculatorKeyList: CalculatorKeyCollection {
     private let entry: CalculatorKeyNode = CalculatorKeyNode(key: .number(.zero))
     private(set) var tail: CalculatorKeyNode?
 
     init() {}
 
-    init(_ head: CalculatorKeyNode) {
+    required public init(_ head: CalculatorKeyNode) {
         append(from: head)
     }
 
-    init(_ keys: CalculatorKey...) {
+    required public init(_ keys: CalculatorKey...) {
         for key in keys {
             append(key)
         }
@@ -37,7 +44,7 @@ public class CalculatorKeyList {
         return entry.next
     }
 
-    func append(_ key: CalculatorKey) {
+    public func append(_ key: CalculatorKey) {
         append(from: CalculatorKeyNode(key: key))
     }
 
@@ -50,7 +57,7 @@ public class CalculatorKeyList {
         tail = CalculatorKeyTraveler().tail(of: node)
     }
 
-    var text: String {
+    public var text: String {
         var text = ""
         var node = entry.next
         outer: while true {
