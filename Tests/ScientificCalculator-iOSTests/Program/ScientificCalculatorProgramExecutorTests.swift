@@ -22,11 +22,11 @@ final class ScientificCalculatorProgramExecutorTests: XCTestCase {
     func testScientificCalculatorProgramExecutor_HasNextEquation() {
         XCTAssertFalse(executor.hasNextEquation())
         executor.setEquations(for: ScientificCalculatorProgram(
+            id: 0,
             name: "Title",
             equations: [
-                ScientificCalculatorProgramEquation(variable: .a, keys: CalculatorKeyList())
-            ],
-            subEquations: []
+                ScientificCalculatorProgramEquation(id: 0, programId: 0, type: .main, variable: .a, keys: CalculatorKeyList())
+            ]
         ))
         XCTAssertTrue(executor.hasNextEquation())
     }
@@ -34,25 +34,24 @@ final class ScientificCalculatorProgramExecutorTests: XCTestCase {
     func testScientificCalculatorProgramExecutor_NextEquation() {
         XCTAssertFalse(executor.hasNextEquation())
         executor.setEquations(for: ScientificCalculatorProgram(
+            id: 0,
             name: "Title",
             equations: [
-                ScientificCalculatorProgramEquation(variable: .a, keys: CalculatorKeyList())
-            ],
-            subEquations: []
+                ScientificCalculatorProgramEquation(id: 0, programId: 0, type: .main, variable: .a, keys: CalculatorKeyList())
+            ]
         ))
         XCTAssertEqual(executor.nextEquation().variable, .a)
     }
 
     func testScientificCalculatorProgramExecutor_SetEquations() {
         executor.setEquations(for: ScientificCalculatorProgram(
+            id: 0,
             name: "Title",
             equations: [
-                ScientificCalculatorProgramEquation(variable: .c, keys: CalculatorKeyList()),
-                ScientificCalculatorProgramEquation(variable: .d, keys: CalculatorKeyList()),
-            ],
-            subEquations: [
-                ScientificCalculatorProgramSubEquation(variable: .a, type: .input),
-                ScientificCalculatorProgramSubEquation(variable: .b, type: .input),
+                ScientificCalculatorProgramEquation(id: 0, programId: 0, type: .main, variable: .c, keys: CalculatorKeyList()),
+                ScientificCalculatorProgramEquation(id: 1, programId: 0, type: .main, variable: .d, keys: CalculatorKeyList()),
+                ScientificCalculatorProgramEquation(id: 2, programId: 0, type: .sub, variable: .a, keys: CalculatorKeyList()),
+                ScientificCalculatorProgramEquation(id: 3, programId: 0, type: .sub, variable: .b, keys: CalculatorKeyList()),
             ]
         ))
         XCTAssertEqual(executor.nextEquation().variable, .a)

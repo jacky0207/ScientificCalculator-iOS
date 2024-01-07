@@ -6,36 +6,48 @@
 //
 
 public class ScientificCalculatorProgram: CalculatorProgram {
+    public var id: Int
     public var name: String
     public var equations: [CalculatorProgramEquation]
-    public var subEquations: [CalculatorProgramSubEquation]
 
     public init(
+        id: Int,
         name: String,
-        equations: [CalculatorProgramEquation],
-        subEquations: [CalculatorProgramSubEquation]
+        equations: [CalculatorProgramEquation]
     ) {
+        self.id = id
         self.name = name
         self.equations = equations
-        self.subEquations = subEquations
     }
 }
 
 extension ScientificCalculatorProgram {
     public static var none: ScientificCalculatorProgram {
         return ScientificCalculatorProgram(
+            id: 0,
             name: "",
-            equations: [],
-            subEquations: []
+            equations: []
         )
     }
 }
 
 public class ScientificCalculatorProgramEquation: CalculatorProgramEquation {
+    public var id: Int
+    public var programId: Int
+    public var type: CalculatorProgramEquationType
     public var variable: CalculatorVariable
     public var keys: CalculatorKeyList
 
-    public init(variable: CalculatorVariable, keys: CalculatorKeyList) {
+    public init(
+        id: Int,
+        programId: Int,
+        type: CalculatorProgramEquationType,
+        variable: CalculatorVariable,
+        keys: CalculatorKeyList
+    ) {
+        self.id = id
+        self.programId = programId
+        self.type = type
         self.variable = variable
         self.keys = keys
     }
@@ -44,18 +56,11 @@ public class ScientificCalculatorProgramEquation: CalculatorProgramEquation {
 extension ScientificCalculatorProgramEquation {
     public static var none: ScientificCalculatorProgramEquation {
         return ScientificCalculatorProgramEquation(
+            id: 0,
+            programId: 0,
+            type: .main,
             variable: .a,
             keys: CalculatorKeyList()
         )
-    }
-}
-
-public class ScientificCalculatorProgramSubEquation: CalculatorProgramSubEquation {
-    public var variable: CalculatorVariable
-    public var type: CalculatorProgramEquationType
-
-    public init(variable: CalculatorVariable, type: CalculatorProgramEquationType) {
-        self.variable = variable
-        self.type = type
     }
 }

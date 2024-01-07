@@ -106,9 +106,13 @@ final class ScientificCalculatorTests: XCTestCase {
 
     func testScientificCalculator_ExecuteProgram() throws {
         let program = ScientificCalculatorProgram(
+            id: 0,
             name: "",
             equations: [
                 ScientificCalculatorProgramEquation(
+                    id: 0,
+                    programId: 0,
+                    type: .main,
                     variable: .x,
                     keys: CalculatorKeyList(
                         .bracket(.openBracket),
@@ -124,6 +128,9 @@ final class ScientificCalculatorTests: XCTestCase {
                     )
                 ),
                 ScientificCalculatorProgramEquation(
+                    id: 1,
+                    programId: 0,
+                    type: .main,
                     variable: .y,
                     keys: CalculatorKeyList(
                         .bracket(.openBracket),
@@ -138,30 +145,40 @@ final class ScientificCalculatorTests: XCTestCase {
                         .variable(.a)
                     )
                 ),
-            ],
-            subEquations: [
-                ScientificCalculatorProgramSubEquation(
+                ScientificCalculatorProgramEquation(
+                    id: 2,
+                    programId: 0,
+                    type: .sub,
                     variable: .a,
-                    type: .input
+                    keys: CalculatorKeyList()
                 ),
-                ScientificCalculatorProgramSubEquation(
+                ScientificCalculatorProgramEquation(
+                    id: 3,
+                    programId: 0,
+                    type: .sub,
                     variable: .b,
-                    type: .input
+                    keys: CalculatorKeyList()
                 ),
-                ScientificCalculatorProgramSubEquation(
+                ScientificCalculatorProgramEquation(
+                    id: 4,
+                    programId: 0,
+                    type: .sub,
                     variable: .c,
-                    type: .input
+                    keys: CalculatorKeyList()
                 ),
-                ScientificCalculatorProgramSubEquation(
+                ScientificCalculatorProgramEquation(
+                    id: 5,
+                    programId: 0,
+                    type: .sub,
                     variable: .d,
-                    type: .fixed(CalculatorKeyList(  // b^2-4ac
+                    keys: CalculatorKeyList(  // b^2-4ac
                         .variable(.b),
                         .function(.square),
                         .operator(.minus),
                         .number(.four),
                         .variable(.a),
                         .variable(.c)
-                    ))
+                    )
                 ),
             ]
         )
@@ -202,9 +219,9 @@ final class ScientificCalculatorTests: XCTestCase {
 
     func testScientificCalculator_ProgramMode_NotCalculateToVariable() throws {
         calculator.execute(for: ScientificCalculatorProgram(
+            id: 0,
             name: "",
-            equations: [ScientificCalculatorProgramEquation(variable: .a, keys: CalculatorKeyList(.number(.one)))],
-            subEquations: []
+            equations: [ScientificCalculatorProgramEquation(id: 0, programId: 0, type: .main, variable: .a, keys: CalculatorKeyList(.number(.one)))]
         ))
         XCTAssertEqual(calculator.mode, .program)
         try calculator.calculate(to: .b)
@@ -238,9 +255,13 @@ final class ScientificCalculatorTests: XCTestCase {
 
     func testScientificCalculator_Program_AppendLog() throws {
         let program = ScientificCalculatorProgram(
+            id: 0,
             name: "",
             equations: [
                 ScientificCalculatorProgramEquation(
+                    id: 0,
+                    programId: 0,
+                    type: .main,
                     variable: .x,
                     keys: CalculatorKeyList(
                         .bracket(.openBracket),
@@ -254,11 +275,12 @@ final class ScientificCalculatorTests: XCTestCase {
                         .number(.two)
                     )
                 ),
-            ],
-            subEquations: [
-                ScientificCalculatorProgramSubEquation(
+                ScientificCalculatorProgramEquation(
+                    id: 1,
+                    programId: 0,
+                    type: .sub,
                     variable: .a,
-                    type: .input
+                    keys: CalculatorKeyList()
                 ),
             ]
         )
