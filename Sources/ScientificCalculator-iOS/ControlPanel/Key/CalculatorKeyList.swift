@@ -18,6 +18,7 @@ public class CalculatorKeyNode {
 }
 
 public protocol CalculatorKeyCollection {
+    init()
     init(_ head: CalculatorKeyNode)
     init(_ keys: CalculatorKey...)
     func append(_ key: CalculatorKey)
@@ -28,7 +29,7 @@ public class CalculatorKeyList: CalculatorKeyCollection {
     private let entry: CalculatorKeyNode = CalculatorKeyNode(key: .number(.zero))
     private(set) var tail: CalculatorKeyNode?
 
-    init() {}
+    required public init() {}
 
     required public init(_ head: CalculatorKeyNode) {
         append(from: head)
