@@ -30,6 +30,27 @@ extension CalculatorKey {
     }
 }
 
+extension CalculatorKey {
+    public static func key(from rawValue: String) -> CalculatorKey? {
+        if let number = CalculatorNumber(rawValue: rawValue) {
+            return .number(number)
+        }
+        if let `operator` = CalculatorOperator(rawValue: rawValue) {
+            return .operator(`operator`)
+        }
+        if let function = CalculatorFunction(rawValue: rawValue) {
+            return .function(function)
+        }
+        if let variable = CalculatorVariable(rawValue: rawValue) {
+            return .variable(variable)
+        }
+        if let bracket = CalculatorBracket(rawValue: rawValue) {
+            return .bracket(bracket)
+        }
+        return nil
+    }
+}
+
 public enum CalculatorNumber: String, CaseIterable {
     case zero = "0"
     case one = "1"
