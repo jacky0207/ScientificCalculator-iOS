@@ -19,6 +19,13 @@ final class ScientificCalculatorKeyListTests: XCTestCase {
 
     }
 
+    func testScientificCalculatorKeyList_Decodable() {
+        let url = Bundle.module.url(forResource: "CalculatorKeyList", withExtension: "json")!
+        let data = try! Data(contentsOf: url)
+        let keys = try! JSONDecoder().decode(CalculatorKeyList.self, from: data)
+        XCTAssertEqual(keys.text, "a+b")
+    }
+
     func testScientificCalculatorKeyList_AppendKey() {
         keys.append(.number(.one))
         XCTAssertEqual(keys.head?.key, .number(.one))

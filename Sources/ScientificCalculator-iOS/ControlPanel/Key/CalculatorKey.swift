@@ -95,7 +95,7 @@ public enum CalculatorFunction: String, CaseIterable {
     case inverseTan = "tan\u{207B}\u{00B9}"
 }
 
-public enum CalculatorVariable: String, CaseIterable {
+public enum CalculatorVariable: String, CaseIterable, Decodable {
     case answer = "Ans"
     case a = "a"
     case b = "b"

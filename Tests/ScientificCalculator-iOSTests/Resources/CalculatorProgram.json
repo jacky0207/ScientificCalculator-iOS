@@ -1,0 +1,17 @@
+{
+    "id": 0,
+    "name": "Quadratic Equations",
+    "equations": [
+        {
+            "id": 0,
+            "programId": 0,
+            "type": 0,
+            "variable": "c",
+            "keys": [
+                "a",
+                "+",
+                "b"
+            ]
+        }
+    ]
+}

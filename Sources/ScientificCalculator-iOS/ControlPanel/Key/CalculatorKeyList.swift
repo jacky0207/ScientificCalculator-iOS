@@ -17,7 +17,7 @@ public class CalculatorKeyNode {
     }
 }
 
-public protocol CalculatorKeyCollection {
+public protocol CalculatorKeyCollection: Decodable {
     init()
     init(_ head: CalculatorKeyNode)
     init(_ keys: CalculatorKey...)
@@ -38,6 +38,16 @@ public class CalculatorKeyList: CalculatorKeyCollection {
     required public init(_ keys: CalculatorKey...) {
         for key in keys {
             append(key)
+        }
+    }
+
+    required public init(from decoder: Decoder) throws {
+        var container = try decoder.unkeyedContainer()
+        while !container.isAtEnd {
+            let keyString = try container.decode(String.self)
+            if let key = CalculatorKey.key(from: keyString) {
+                append(key)
+            }
         }
     }
 

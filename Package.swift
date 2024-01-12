@@ -23,6 +23,10 @@ let package = Package(
             dependencies: []),
         .testTarget(
             name: "ScientificCalculator-iOSTests",
-            dependencies: ["ScientificCalculator-iOS"]),
+            dependencies: ["ScientificCalculator-iOS"],
+            resources: [
+                .process("Resources/CalculatorKeyList.json"),
+                .process("Resources/CalculatorProgram.json")
+            ]),
     ]
 )

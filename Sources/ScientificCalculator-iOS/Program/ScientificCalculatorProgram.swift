@@ -19,6 +19,23 @@ public class ScientificCalculatorProgram: CalculatorProgram {
         self.name = name
         self.equations = equations
     }
+
+    enum CodingKeys: CodingKey {
+        case id, name, equations
+    }
+
+    public required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        id = try container.decode(Int.self, forKey: .id)
+        name = try container.decode(String.self, forKey: .name)
+        var equationContainer = try container.nestedUnkeyedContainer(forKey: .equations)
+        var equations = [CalculatorProgramEquation]()
+        while !equationContainer.isAtEnd {
+            let equation = try equationContainer.decode(ScientificCalculatorProgramEquation.self)
+            equations.append(equation)
+        }
+        self.equations = equations
+    }
 }
 
 extension ScientificCalculatorProgram {
